@@ -1,2 +1,3 @@
 # Diamond-Valuation
-The repository has a site than him, evaluation a price for the diamonds than is specified, as you color, cut, clarity, total percent depth of a diamonds, table of a diamonds, depth, width and length.
+The repository is a site that has the function, which will evaluate a price of a diamond on what is specified, such specification are:  color, cut, clarity, the total percentage depth of a diamond, table of a diamond, depth, width and length of a diamond.
+(sdf)[]
