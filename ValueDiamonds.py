@@ -18,7 +18,7 @@ clarity = ""
 st.title("Descubra o Valor do Seu Diamante: Estime o Preço com Precisão! 💎\n")
 
 # Lendo o arquivo para a usar no dataframe
-file = st.file_uploader("Coloque aqui o arquivo diamonds:", type = ["csv", "xlsx"])
+'''file = st.file_uploader("Coloque aqui o arquivo diamonds:", type = ["csv", "xlsx"])
 
 if not file is None:
     try:
@@ -27,7 +27,8 @@ if not file is None:
         try:
             diamonds = pd.read_excel(file)
         except:
-            st.write(f"Não foi possível carregar o arquivo.")
+            st.write(f"Não foi possível carregar o arquivo.")'''
+diamonds = pd.read_csv(r"C:\Users\PP\OneDrive - Fundação São Paulo\PUC-SP\1 Semestre\Engenharia de Softwere\Diamond-Valuation\Diamonds_limpa.csv")
 
 if not diamonds is None:
     # Definindo a variável cut
