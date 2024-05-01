@@ -16,9 +16,9 @@ color = ""
 clarity = ""
 
 st.title("Descubra o Valor do Seu Diamante: Estime o Preço com Precisão! 💎\n")
+st.write("---")
 
 # Lendo o arquivo para a usar no dataframe
-
 diamonds = pd.read_csv("Diamonds_limpa.csv")
 
 if not diamonds is None:
@@ -91,8 +91,8 @@ if not diamonds is None:
     y = st.number_input("Digite abaixo o Largura (mm) do diamante:", min_value=0.00)
     z = st.number_input("Digite abaixo o Profundidade (mm) do diamante:", min_value=0.00)
     
+    st.write("---")
     # A função abaixo é para prever o preço do diamante
-    
     st.markdown(f"## **Características do diamante cadastrado:**")
     if cut == "": 
         st.markdown("- Corte: ?")
