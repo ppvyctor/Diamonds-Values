@@ -19,7 +19,7 @@ st.title("Descubra o Valor do Seu Diamante: Estime o Preço com Precisão! 💎\
 
 # Lendo o arquivo para a usar no dataframe
 
-diamonds = pd.read_csv(r"C:\Users\PP\OneDrive - Fundação São Paulo\PUC-SP\1 Semestre\Engenharia de Softwere\Diamond-Valuation\Diamonds_limpa.csv")
+diamonds = pd.read_csv("Diamonds_limpa.csv")
 
 if not diamonds is None:
     # Definindo a variável cut
