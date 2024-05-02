@@ -23,12 +23,12 @@ def cadernoJupyter():
             from sklearn.impute import KNNImputer''', language="python")
     
     st.code('''
-            path = "Diamonds_values_faltantes.csv"
+            path = r"DatabBases\Diamonds_values_faltantes.csv"
             diamonds = pd.read_csv(fr"{path}")
             diamonds''', language="python")
 
     # Execução do código acima
-    path = "Diamonds_values_faltantes.csv"
+    path = r"DataBases\Diamonds_values_faltantes.csv"
     diamonds = pd.read_csv(fr"{path}")
     diamonds
     st.write("---")
@@ -167,7 +167,7 @@ def cadernoJupyter():
     diamonds
 
     st.markdown("Salvando a base de dados já limpa e sem valores faltantes")
-    st.code('''path = "Diamonds_limpa.csv"
+    st.code('''path = r"DataBases\Diamonds_limpa.csv"
     try:
         pd.read_csv(f"{path}")
         print(f"Já existe esse dataframe no diretório: {path}")
