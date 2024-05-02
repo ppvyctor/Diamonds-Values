@@ -1,4 +1,12 @@
 import streamlit as st
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import plotly.express as px
+import math
+import numpy as np
+from sklearn.preprocessing import OrdinalEncoder
+from sklearn.impute import KNNImputer
 
 def cadernoJupyter():
     # primeira parte do estudo jupyter
@@ -13,14 +21,6 @@ def cadernoJupyter():
             import numpy as np
             from sklearn.preprocessing import OrdinalEncoder
             from sklearn.impute import KNNImputer''', language="python")
-    import pandas as pd
-    import seaborn as sns
-    import matplotlib.pyplot as plt
-    import plotly.express as px
-    import math
-    import numpy as np
-    from sklearn.preprocessing import OrdinalEncoder
-    from sklearn.impute import KNNImputer
     
     st.code('''
             path = "Diamonds_values_faltantes.csv"
@@ -74,8 +74,8 @@ def cadernoJupyter():
     st.write("---")
 
     # Começo de outro bloco de estudo
-    st.markdown('''# **Implementação do K-NN**
-    - OBS: ESSE BLOCO DE IMPLEMENTAÇÃO DO KNN PODERÁ DEMORAR UM POUCO A CARREGAR, DEVIDO AO PROCESSAMENTO DE DADOS!!''')
+    st.markdown('''# **Implementação do K-NN**''')
+    st.markdown('''- OBS: ESSE BLOCO DE IMPLEMENTAÇÃO DO KNN PODERÁ DEMORAR UM POUCO A CARREGAR, DEVIDO AO PROCESSAMENTO DE DADOS!!''')
     st.markdown("Colocando medições iguais a 0 de comprimento, largura e/ou profundidade de um diamante como NaN")
 
     st.code('''for x in range(diamonds.shape[0]):
