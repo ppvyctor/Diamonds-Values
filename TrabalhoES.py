@@ -1,12 +1,4 @@
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import plotly.express as px
-import math
 import streamlit as st
-import numpy as np
-from sklearn.preprocessing import OrdinalEncoder
-from sklearn.impute import KNNImputer
 
 def cadernoJupyter():
     # primeira parte do estudo jupyter
@@ -21,7 +13,15 @@ def cadernoJupyter():
             import numpy as np
             from sklearn.preprocessing import OrdinalEncoder
             from sklearn.impute import KNNImputer''', language="python")
-
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    import plotly.express as px
+    import math
+    import numpy as np
+    from sklearn.preprocessing import OrdinalEncoder
+    from sklearn.impute import KNNImputer
+    
     st.code('''
             path = "Diamonds_values_faltantes.csv"
             diamonds = pd.read_csv(fr"{path}")
