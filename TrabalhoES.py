@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import math
 import numpy as np
-from IPython.display import display
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.impute import KNNImputer
 
