@@ -23,12 +23,12 @@ def cadernoJupyter():
             from sklearn.impute import KNNImputer''', language="python")
     
     st.code(r'''
-            path = r"DatabBases\Diamonds_values_faltantes.csv"
+            path = r"DataBases\Diamonds_values_faltantes.csv"
             diamonds = pd.read_csv(fr"{path}")
             diamonds''', language="python")
 
     # Execução do código acima
-    path = r"DataBases\Diamonds_values_faltantes.csv"
+    path = r"DataBases/Diamonds_values_faltantes.csv"
     diamonds = pd.read_csv(fr"{path}")
     diamonds
     
