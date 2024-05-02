@@ -21,7 +21,7 @@ if st.sidebar.button("Descobrir o valor de um diamante 🤑💲"):
     st.write("---")
 
     # Lendo o arquivo para a usar no dataframe
-    diamonds = pd.read_csv(r"DataBases\Diamonds_limpa.csv")
+    diamonds = pd.read_csv(r"DataBases/Diamonds_limpa.csv")
     
     # Definindo a variável cut
     cut = st.text_input("Digite abaixo o corte do diamante (Fair, Good, Very Good, Premium, Ideal) *Obrigatório").lower()
