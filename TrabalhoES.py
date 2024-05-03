@@ -30,7 +30,7 @@ def cadernoJupyter():
     # Execução do código acima
     path = r"DataBases/Diamonds_values_faltantes.csv"
     diamonds = pd.read_csv(fr"{path}")
-    diamonds
+    st.dataframe(diamonds)
     
     st.write("---")
 
@@ -54,7 +54,7 @@ def cadernoJupyter():
         counter[column_name] = diamonds.shape[0] - len(diamonds[column_name].dropna())
 
     counter_df = pd.DataFrame(list(counter.items()), columns=['Coluna', 'Quantidade de NaN'])
-    counter_df
+    st.dataframe(counter_df)
 
     st.code('''
     plt.figure(figsize = (8, 6))
@@ -92,7 +92,7 @@ def cadernoJupyter():
         for y in range(7, diamonds.shape[1]):
             if diamonds.iloc[x, y] == 0: diamonds.iloc[x, y] = np.nan
             elif diamonds.iloc[x, y] >= 30: diamonds.iloc[x, y] = np.nan
-    diamonds
+    st.dataframe(diamonds)
 
     st.markdown("Abaixo está a implementação do K-NN nas colunas numéricas")
 
@@ -110,7 +110,7 @@ def cadernoJupyter():
     classificacao = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
     diamonds[["carat", "depth", "table", "price", "x", "y", "z"]] = classificacao.fit_transform(diamonds[["carat", "depth", "table", "price", "x", "y", "z"]])
 
-    diamonds
+    st.dataframe(diamonds)
 
     st.markdown("Aplicação do K-NN para colunas categóricas")
 
@@ -147,7 +147,7 @@ def cadernoJupyter():
         for y in range(1, 4):
             if pd.isna(diamonds.iloc[x, y]): diamonds.iloc[x, y] = diamonds_imputer[x][y]
 
-    diamonds
+    st.dataframe(diamonds)
 
     st.markdown("Abaixo estamos normalizando as colunas numéricas.")
 
@@ -164,7 +164,7 @@ def cadernoJupyter():
     diamonds[["table", "price"]] = round(diamonds[["table", "price"]])
     diamonds["depth"] = round(diamonds["depth"], 1)
 
-    diamonds
+    st.dataframe(diamonds)
 
     st.markdown("Salvando a base de dados já limpa e sem valores faltantes")
     st.code(r'''
