@@ -35,7 +35,7 @@ def cadernoJupyter():
     st.write("---")
 
     # Segundo parte do estudo jupyter
-    st.markdown("# **Visualização de coeficiênte de correlação lienar e separação da base de dados, para melhor implementação do KNN.**")
+    st.markdown("# **Visualização de coeficiênte de correlação linear e separação da base de dados, para melhor implementação do KNN.**")
     st.markdown("Abaixo está a quantidade de valores faltantes por coluna")
 
     st.code('''

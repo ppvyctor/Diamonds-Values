@@ -15,6 +15,7 @@ cut = ""
 color = ""
 clarity = ""
 
+st.sidebar.title("Escolha uma das opções abaixo:")
 tela = st.sidebar.selectbox("", ("Descobrir o valor de um diamante 🤑💲", "Estudo preciso sobre a precificação de diamantes. 📘"))
 
 #with st.sidebar:
