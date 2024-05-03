@@ -65,6 +65,13 @@ def cadernoJupyter():
     plt.figure(figsize = (8, 6))
     sns.heatmap((diamonds[["carat", "depth", "table", "price", "x", "y", "z"]]).corr(), vmin = -1, vmax = 1, annot = True, cmap = 'magma')
     st.pyplot(plt.gcf())
+    
+    st.markdown(r'''
+    **Análise do heatmap acima com base no price(preço):**
+    - Podemos concluir que o price(preço) não tem uma correlação boa com a porcentagem total do diamante(depth) e também não tem uma correlação alta com o table, sendo uma correlação inversamente proporcional de 1,1% com o depth, e uma relação proporcional de 13%.
+    - Podemos concluir também que o preço tem uma boa correlação linear com o carat(quilate) de 92%, x(comprimento) de 88%, y(largura) e z(profundidade) de 86%
+
+    Com base nessa análise do heatmap, podemos concluir que carat(quilate), x(comprimento), y(largura) e z(profundidade) são as principais características numéricas de um diamante, que podem estimar o preço um preço com mais precisão dos diamantes.''')
 
     st.markdown("Abaixo estamos realizando o processo de separação da base de dados diamonds. Para que assim, o processo de machine learn seja mais efetivo.")
     st.markdown('''- Cut tem 5 tipos de classificação Ideal, Premium, Good, Very Good e Fair
