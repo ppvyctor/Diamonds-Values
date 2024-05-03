@@ -15,8 +15,10 @@ cut = ""
 color = ""
 clarity = ""
 
+tela = st.sidebar.selectbox("", ("Descobrir o valor de um diamante 🤑💲", "Estudo preciso sobre a precificação de diamantes. 📘"))
+
 #with st.sidebar:
-if st.sidebar.button("Descobrir o valor de um diamante 🤑💲"):
+if tela == "Descobrir o valor de um diamante 🤑💲":
     st.title("Descubra o Valor do Seu Diamante: Estime o Preço com Precisão! 💎\n")
     st.write("---")
 
@@ -149,8 +151,7 @@ if st.sidebar.button("Descobrir o valor de um diamante 🤑💲"):
     #- CASO CONTRÁRIO SE O USUÁRIO NÃO DIGITAR A DENSIDADE, E OS VALORES DE COMPRIMENTO, LARGURA OU PROFUNDIDADE SEREM IGUAIS A 0, ENTÃO O ESSES VALORES TERÃO 
     #DE SER CONSIDERADOS NAN
     
-    if st.sidebar.button("Estudo preciso sobre a precificação de diamantes. 📘"): cadernoJupyter()
-        
-        
-elif st.sidebar.button("Estudo preciso sobre a precificação de diamantes. 📘"): cadernoJupyter()
+ 
+else:
+    cadernoJupyter()
     
