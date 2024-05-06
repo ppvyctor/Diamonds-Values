@@ -22,7 +22,7 @@ clarity = ""
 st.sidebar.title("Escolha uma das opções abaixo:")
 tela = st.sidebar.selectbox("", ("Descobrir o valor de um diamante 🤑💲", "Estudo preciso sobre a precificação de diamantes. 📘"))
 
-#with st.sidebar:
+
 if tela == "Descobrir o valor de um diamante 🤑💲":
     st.title("Descubra o Valor do Seu Diamante: Estime o Preço com Precisão! 💎\n")
     st.write("---")
@@ -30,7 +30,7 @@ if tela == "Descobrir o valor de um diamante 🤑💲":
     diamonds = pd.read_csv(r"DataBases/Diamonds_limpa.csv")
     
     # Definindo a variável cut
-    cut = st.text_input("Digite abaixo o corte do diamante (Fair, Good, Very Good, Premium, Ideal) *Obrigatório").lower()
+    cut = st.text_input("Digite abaixo o corte do diamante (Fair, Good, Very Good, Premium, Ideal)").lower()
     cut = cut.replace(" ", "")# tirando os espaços em branco
     if cut == "verygood": 
         cut = list(cut)
@@ -50,7 +50,7 @@ if tela == "Descobrir o valor de um diamante 🤑💲":
         
         
     # Definindo uma cor ao diamante
-    color = st.text_input("Digite abaixo a color do diamante (D, F, H, E, J, G, I) *Obrigatório").upper()
+    color = st.text_input("Digite abaixo a color do diamante (D, F, H, E, J, G, I)").upper()
     color = color.replace(" ", "") # tirando os espaços em branco
     
     if len(list(color)) != 1 and color != "":
@@ -58,7 +58,7 @@ if tela == "Descobrir o valor de um diamante 🤑💲":
 
 
     # Definindo a claridade (pureza) do diamante 
-    clarity = st.text_input("Digite abaixo a claridade (pureza) do diamante (IF, SI1, VS2, VVS1, I1, VS1, SI2, VVS2) *Obrigatório").upper()
+    clarity = st.text_input("Digite abaixo a claridade (pureza) do diamante (IF, SI1, VS2, VVS1, I1, VS1, SI2, VVS2)").upper()
     clarity = clarity.replace(" ", "") # tirando os espaços em branco
     
     if (not clarity in list(set(diamonds["clarity"]))) and clarity != "": 
@@ -68,10 +68,10 @@ if tela == "Descobrir o valor de um diamante 🤑💲":
         st.write("")
 
     #Defina o depth (porcentagem total da profundidade) do diamante
-    depth = st.number_input("Digite abaixo o depth (porcentagem total da profundidade) do diamante (Opcional)", min_value = 0.0)
+    depth = st.number_input("Digite abaixo o depth (porcentagem total da profundidade) do diamante", min_value = 0.0)
 
     # Definindo um table (maior faceta plana de um diamante)
-    table = st.number_input("Digite abaixo o table (maior faceta plana) do diamante (Opcional)", min_value = 0.0)
+    table = st.number_input("Digite abaixo o table (maior faceta plana) do diamante", min_value = 0.0)
 
     for _ in range(2):
         st.write("")
