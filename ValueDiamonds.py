@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np
 import streamlit as st
+import math
+import requests
+from sklearn.model_selection import train_test_split
+from sklearn.impute import KNNImputer
 from TrabalhoES import cadernoJupyter
 
 densidade = 0.0
@@ -22,8 +26,7 @@ tela = st.sidebar.selectbox("", ("Descobrir o valor de um diamante 🤑💲", "E
 if tela == "Descobrir o valor de um diamante 🤑💲":
     st.title("Descubra o Valor do Seu Diamante: Estime o Preço com Precisão! 💎\n")
     st.write("---")
-
-    # Lendo o arquivo para a usar no dataframe
+    
     diamonds = pd.read_csv(r"DataBases/Diamonds_limpa.csv")
     
     # Definindo a variável cut
@@ -116,8 +119,8 @@ if tela == "Descobrir o valor de um diamante 🤑💲":
     st.markdown(f"- Comprimento: {x}")
     st.markdown(f"- Largura: {y}")
     st.markdown(f"- Profundidade: {z}")
-    for _ in range(2):
-        st.write("")
+    
+    st.write("---")
     
     
     # Condições para se ter a opção de prever o preço do diamante
@@ -140,9 +143,79 @@ if tela == "Descobrir o valor de um diamante 🤑💲":
             if z == 0: z = np.nan
             if depth == 0: depth = np.nan
             if table == 0: table = np.nan
+            st.markdown("### **É IMPORTANTE RESSALTAR QUE O TEMPO DE ESPERA PARA O RESULTADO É DE 60-90 Segundos**")
             if st.button("Prever o preço do diamante!! 💰💲"):
-                # Código de Machine Learn  
-                pass
+                st.write("Analizando o diamante para definir seu preço")
+                st.write("")
+                st.write("")
+                
+                diamonds.loc[diamonds.shape[0]] = {"carat": carat,
+                                                       "cut": cut, "color": color, "clarity": clarity,
+                                                       "depth": depth, "table": table,
+                                                       "x": x, "y": y, "z": z}
+                
+                safe_info = []
+                for y2 in range(1, 4):
+                    info = list(set(diamonds[diamonds.columns[y2]].dropna()))
+                    safe_info.append(info)
+                    tam = len(info)
+                    
+                    for x in range(diamonds.shape[0]):
+                        for pos in range(tam):
+                            if not pd.isna(diamonds.iloc[x, y2]): 
+                                if diamonds.iloc[x, y2] == info[pos]: 
+                                    diamonds.iloc[x, y2] = pos
+                                    break
+                            else:
+                                break
+
+                # 1. Dividir o conjunto de dados
+                diamonds_train, diamonds_test = train_test_split(diamonds, test_size=0.2, random_state=42)
+
+                # 2. Aplicar o KNN para imputar valores faltantes na coluna "price" do conjunto de treinamento
+                knn_imputer = KNNImputer(n_neighbors=round(math.log(diamonds.shape[0])), metric='nan_euclidean')
+                
+                # Imputar valores faltantes na coluna "price" do conjunto de teste usando o mesmo imputer
+                diamonds_train_imputed = knn_imputer.fit_transform(diamonds_train)
+                diamonds_aux = knn_imputer.fit_transform(diamonds)
+                diamonds_test_imputed = knn_imputer.transform(diamonds_test)
+
+                valor_diamonds = pd.DataFrame(diamonds_aux, columns = diamonds.columns)   
+                
+                # O valor calculado está em dolar, mas queremos transformar isso para real
+                
+                # API da cotação do dolar
+                respose = requests.get(r"https://economia.awesomeapi.com.br/last/USD-BRL,USD-EUR")
+                cotacao = respose.json()
+                st.write(cotacao)
+                cotacao_dolar_real = cotacao["USDBRL"]["bid"] # Valor do dolar atualmente
+                cotacao_dolar_euro = cotacao["USDEUR"]["bid"] # Valor do euro ao transformado a partir do dolar (Dolar-Euro)
+                
+                # Modificando a forma de apresentar a data do valor da cotação atribuida
+                data_dolar_real = cotacao["USDBRL"]["create_date"].split(" ")[0].split("-")
+                data_dolar_real = reversed(data_dolar_real)
+                data_dolar_real = "/".join(data_dolar_real)
+                
+                data_dolar_euro = cotacao["USDEUR"]["create_date"].split(" ")[0].split("-")
+                data_dolar_euro = reversed(data_dolar_euro)
+                data_dolar_euro = "/".join(data_dolar_euro)
+                
+                st.markdown(f'''
+                # *O valor do diamante com as características dadas é de:*
+                - Dólar: ${round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"], 2)}
+                - Euro: €{round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"] * float(cotacao_dolar_euro), 2)}
+                - Real: R${round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"] * float(cotacao_dolar_real), 2)}
+                
+                #### Cotação do Dolar-Real:
+                - Valor: {cotacao_dolar_real}
+                - Data: {data_dolar_real}
+                - Hora: {cotacao["USDBRL"]["create_date"].split(" ")[1]}
+                
+                #### Cotação do Dolar-Euro:
+                - Valor: {cotacao_dolar_euro}
+                - Data: {data_dolar_euro}
+                - Hora: {cotacao["USDEUR"]["create_date"].split(" ")[1]}''')
+                
         else:
             if densidade == 0: st.markdown("##### **É necessário definir o Quilate do diamante, por favor reveja as digitações.**")
             
