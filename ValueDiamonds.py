@@ -187,7 +187,6 @@ if tela == "Descobrir o valor de um diamante 🤑💲":
                 # API da cotação do dolar
                 respose = requests.get(r"https://economia.awesomeapi.com.br/last/USD-BRL,USD-EUR")
                 cotacao = respose.json()
-                st.write(cotacao)
                 cotacao_dolar_real = cotacao["USDBRL"]["bid"] # Valor do dolar atualmente
                 cotacao_dolar_euro = cotacao["USDEUR"]["bid"] # Valor do euro ao transformado a partir do dolar (Dolar-Euro)
                 
