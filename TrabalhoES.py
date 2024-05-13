@@ -352,6 +352,7 @@ def cadernoJupyter():
     st.markdown("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ficando na fórmula geral:")
     st.latex(r"Quilate = \frac{Comprimento \times Largura \times Profundidade \times Densidade}{200}")
 
-
+    st.write("---")
+    
     # Iniciando outro bloco de estudos
-    st.markdown("# **Análise de correlação entre as colunas numéricas**")
+    st.markdown("# **Relação de preço com as colunas categóricas**")
