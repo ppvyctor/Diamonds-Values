@@ -1,4 +1,4 @@
 # Diamond-Valuation
-The repository is a site that has the function, which will evaluate a price of a diamond on what is specified, such specification are:  color, cut, clarity, the total percentage depth of a diamond, table of a diamond, depth, width and length of a diamond.
+The repository hosts a site designed to evaluate the price of a diamond based on specified criteria. These criteria include the diamond's color, cut, clarity, total depth percentage, table percentage, depth, width, and length.
 
-- [Discover the price of the your diamonds](https://valuediamonds.streamlit.app/)
+[Discover the price of the your diamonds](https://valuediamonds.streamlit.app/)
