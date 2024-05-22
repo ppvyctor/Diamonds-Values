@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import plotly.express as px
 import math
 import numpy as np
 from sklearn.preprocessing import OrdinalEncoder
@@ -15,7 +14,6 @@ def cadernoJupyter():
             import pandas as pd
             import seaborn as sns
             import matplotlib.pyplot as plt
-            import plotly.express as px
             import math
             import streamlit as st
             import numpy as np
@@ -356,3 +354,144 @@ def cadernoJupyter():
     
     # Iniciando outro bloco de estudos
     st.markdown("# **Relação de preço com as colunas categóricas**")
+    
+    st.code("diamonds.describe()")
+    diamonds.describe()
+    
+    description = diamonds.describe()
+    price = [f"until ${description["price"]["25%"]}", 
+        f"until ${description["price"]["50%"]}",
+        f"until ${description["price"]["75%"]}",
+        f"greater than ${description["price"]["75%"]}"]
+
+    carat = [f"until ${description["carat"]["25%"]}", 
+        f"until ${description["carat"]["50%"]}",
+        f"until ${description["carat"]["75%"]}",
+        f"greater than ${description["carat"]["75%"]}"]
+
+    def agrupamento(diamonds, coluna, index_coluna: list):
+        description = diamonds.describe()
+        cut = pd.DataFrame({"Fair": [0.0 for x in range(4)],
+                            "Good": [0.0 for x in range(4)],
+                            "Very Good": [0.0 for x in range(4)],
+                            "Premium": [0.0 for x in range(4)],
+                            "Ideal": [0.0 for x in range(4)]}, 
+                            index = index_coluna)
+
+        color = pd.DataFrame({"J": [0.0 for x in range(4)],
+                            "D": [0.0 for x in range(4)],
+                            "I": [0.0 for x in range(4)],
+                            "E": [0.0 for x in range(4)],
+                            "F": [0.0 for x in range(4)],
+                            "H": [0.0 for x in range(4)],
+                            "G": [0.0 for x in range(4)]}, 
+                            index = index_coluna)
+
+        clarity = pd.DataFrame({"I1": [0.0 for x in range(4)],
+                                "IF": [0.0 for x in range(4)],
+                                "VVS1": [0.0 for x in range(4)],
+                                "VVS2": [0.0 for x in range(4)],
+                                "VS1": [0.0 for x in range(4)],
+                                "VS2": [0.0 for x in range(4)],
+                                "SI2": [0.0 for x in range(4)],
+                                "SI1": [0.0 for x in range(4)]}, 
+                                index = index_coluna)
+
+        for intervalo in ["25%", "50%", "75%", "max"]:
+            if intervalo == "25%":
+                diamonds_aux = diamonds[diamonds[coluna] <= diamonds.describe()[coluna][intervalo]].reset_index()
+                
+            elif intervalo == "50%":
+                diamonds_aux = diamonds[diamonds[coluna] > diamonds.describe()[coluna]["25%"]].reset_index()
+                diamonds_aux = diamonds_aux[diamonds_aux[coluna] <= diamonds.describe()[coluna][intervalo]].reset_index()
+                
+            elif intervalo == "75%":
+                diamonds_aux = diamonds[diamonds[coluna] > diamonds.describe()[coluna]["50%"]].reset_index()
+                diamonds_aux = diamonds_aux[diamonds_aux[coluna] <= diamonds.describe()[coluna][intervalo]].reset_index()
+                
+            else:
+                diamonds_aux = diamonds[diamonds[coluna] > diamonds.describe()[coluna]["75%"]].reset_index()
+            
+            describe = diamonds.describe()[coluna][intervalo]
+            
+            for x in range(diamonds_aux.shape[0]):
+                for y in range(cut.shape[1]):
+                    if diamonds_aux.loc[x, "cut"] == cut.columns[y]:
+                        try:
+                            cut.loc[f"until ${describe}", cut.columns[y]] += 1.0
+                        except KeyError:
+                            cut.loc[f"greater than ${description[coluna]["75%"]}", cut.columns[y]] += 1.0
+                        break
+                    
+                for y in range(color.shape[1]):
+                    if diamonds_aux.loc[x, "color"] == color.columns[y]:
+                        try:
+                            color.loc[f"until ${describe}", color.columns[y]] += 1.0
+                        except KeyError:
+                            color.loc[f"greater than ${description[coluna]["75%"]}", color.columns[y]] += 1.0
+                        break
+                    
+                for y in range(clarity.shape[1]):
+                    if diamonds_aux.loc[x, "clarity"] == clarity.columns[y]:
+                        try:
+                            clarity.loc[f"until ${describe}", clarity.columns[y]] += 1.0
+                        except (KeyError, KeyboardInterrupt):
+                            clarity.loc[f"greater than ${description[coluna]["75%"]}", clarity.columns[y]] += 1.0
+                        break
+
+        soma_cut = [sum(cut.iloc[:, x]) for x in range(cut.shape[1])]
+        soma_color = [sum(color.iloc[:, x]) for x in range(color.shape[1])]
+        soma_clarity = [sum(clarity.iloc[:, x]) for x in range(clarity.shape[1])]
+
+        for x in range(4):
+            for y in range(cut.shape[1]):
+                cut.iloc[x, y] = round(cut.iloc[x, y] / soma_cut[y], 4).astype(float)
+            for y in range(color.shape[1]):
+                color.iloc[x, y] = round(color.iloc[x, y] / soma_color[y], 4).astype(float)
+            for y in range(clarity.shape[1]):
+                clarity.iloc[x, y] = round(clarity.iloc[x, y] / soma_clarity[y], 4).astype(float)
+
+        if "carat" == coluna:
+            cut.index = [f"until {description["carat"]["25%"]}", 
+                        f"until {description["carat"]["50%"]}",
+                        f"until {description["carat"]["75%"]}",
+                        f"greater than {description["carat"]["75%"]}"]
+            
+            color.index = [f"until {description["carat"]["25%"]}", 
+                        f"until {description["carat"]["50%"]}",
+                        f"until {description["carat"]["75%"]}",
+                        f"greater than {description["carat"]["75%"]}"]
+            
+            clarity.index = [f"until {description["carat"]["25%"]}", 
+                        f"until {description["carat"]["50%"]}",
+                        f"until {description["carat"]["75%"]}",
+                        f"greater than {description["carat"]["75%"]}"]
+            
+
+        return cut, color, clarity
+    
+    st.code('cut, color, clarity = agrupamento(diamonds, "price", price)\ncut_carat, color_carat, clarity_carat = agrupamento(diamonds, "carat", carat)')
+    cut, color, clarity = agrupamento(diamonds, "price", price)
+    cut_carat, color_carat, clarity_carat = agrupamento(diamonds, "carat", carat)
+    
+    st.markdown('''O comando acima cria seis tabelas que exibem, em porcentagens, a quantidade de diamantes com determinadas características dentro de intervalos de valores específicos. Além disso, são geradas outras três tabelas semelhantes, mas, em vez de agrupar os dados pelo preço, eles são agrupados pelo peso em quilates (carat).''')
+    
+    st.code("cut")
+    st.dataframe(cut)
+    
+    st.code("cut_carat")
+    st.dataframe(cut_carat)
+    
+    st.code("color")
+    st.dataframe(color)
+    
+    st.code("color_carat")
+    st.dataframe(color_carat)
+    
+    st.code("clarity")
+    st.dataframe(clarity)
+    
+    st.code("clarity_carat")
+    st.dataframe(clarity_carat)
+    
+    st.markdown("Com base nas tabelas acima, podemos perceber que os diamantes são melhor caracterizados quando agrupamos usando suas características por quilate. Utilizando um algoritmo de agrupamento KNN para estimar o valor dos diamantes, os parâmetros categóricos como cor, claridade (pureza) e corte, juntamente com o quilate, podem ser características básicas para estimar o preço dos diamantes com as mínimas classificações possíveis de um diamante.")

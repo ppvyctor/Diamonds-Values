@@ -68,10 +68,10 @@ if tela == "Descobrir o valor de um diamante 🤑💲":
         st.write("")
 
     #Defina o depth (porcentagem total da profundidade) do diamante
-    depth = st.number_input("Digite abaixo o depth (porcentagem total da profundidade) do diamante", min_value = 0.0)
+    depth = st.number_input("Digite abaixo o depth (porcentagem total da profundidade) do diamante", min_value = 0.0, max_value=100.0)
 
     # Definindo um table (maior faceta plana de um diamante)
-    table = st.number_input("Digite abaixo o table (maior faceta plana) do diamante", min_value = 0.0)
+    table = st.number_input("Digite abaixo o table (maior faceta plana) do diamante", min_value = 0.0, max_value=150.00)
 
     for _ in range(2):
         st.write("")
@@ -82,9 +82,9 @@ if tela == "Descobrir o valor de um diamante 🤑💲":
                         ("Quilate", "Massa(mg) do diamante", "Densidade(mg/mm³) do diamante"))
     
     if option == "Quilate":
-        carat = st.number_input("Digite abaixo o valor do quilate do diamante:", min_value=0.01)
+        carat = st.number_input("Digite abaixo o valor do quilate do diamante:", min_value=0.01, max_value=10)
     elif option == "Massa(mg) do diamante":
-        carat = st.number_input("Digite abaixo a massa(mg) do diamante: (OBS: 200mg = 1 Quilate)", min_value=1)
+        carat = st.number_input("Digite abaixo a massa(mg) do diamante: (OBS: 200mg = 1 Quilate)", min_value=1, max_value=2000)
         carat = round(carat/200, 2)
     else:
         st.markdown("### **Pela escolha ter sido a densidade, vamos precisar das medidas do diamante para calcular o quilate.**")
@@ -94,9 +94,9 @@ if tela == "Descobrir o valor de um diamante 🤑💲":
 
 
     # Definir comprimento do diamante
-    x = st.number_input("Digite abaixo o Comprimento (mm) do diamante:", min_value=0.00)
-    y = st.number_input("Digite abaixo o Largura (mm) do diamante:", min_value=0.00)
-    z = st.number_input("Digite abaixo o Profundidade (mm) do diamante:", min_value=0.00)
+    x = st.number_input("Digite abaixo o Comprimento (mm) do diamante:", min_value=0.00, max_value=20.00)
+    y = st.number_input("Digite abaixo o Largura (mm) do diamante:", min_value=0.00,  max_value=20.00)
+    z = st.number_input("Digite abaixo o Profundidade (mm) do diamante:", min_value=0.00, max_value=18.00)
     
     st.write("---")
     # A função abaixo é para prever o preço do diamante
