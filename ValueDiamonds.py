@@ -79,13 +79,18 @@ if button1 or (button1 == False and button2 == False):
     # Definindo as opções de escolha de carat
     option = st.selectbox('''Escolha como deseja definir o Quilate do diamante: 
                         (OBS: Caso a escolha seja a densidade, será obrigatório a digitação do comprimento largura e profundidade do diamante) *(Obrigatório)''', 
-                        ("Quilate", "Massa(mg) do diamante", "Densidade(mg/mm³) do diamante"))
+                        ("Quilate", "Pontos do diamante (pt)", "Massa(mg) do diamante", "Densidade(mg/mm³) do diamante"))
     
     if option == "Quilate":
         carat = st.number_input("Digite abaixo o valor do quilate do diamante:", min_value=0.01, max_value=10.0)
+    
+    elif option == "Pontos do diamante (pt)":
+        carat = round(st.number_input("Digite abaixo os pontos do diamante: (100pt = 1 Quilate)", min_value=1, max_value=10000) / 100, 2)
+        
     elif option == "Massa(mg) do diamante":
         carat = st.number_input("Digite abaixo a massa(mg) do diamante: (OBS: 200mg = 1 Quilate)", min_value=1, max_value=2000)
         carat = round(carat/200, 2)
+    
     else:
         st.markdown("### **Pela escolha ter sido a densidade, vamos precisar das medidas do diamante para calcular o quilate.**")
         densidade = st.number_input("Digite abaixo a Densidade(Mg/mm³) do diamante:", min_value=0.0)
