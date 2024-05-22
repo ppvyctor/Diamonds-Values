@@ -364,10 +364,10 @@ def cadernoJupyter():
         f"until ${description.loc[6, 3]}",
         f"greater than ${description.loc[6, 3]}"]
 
-    carat = [f"until ${description["carat"]["25%"]}", 
-        f"until ${description["carat"]["50%"]}",
-        f"until ${description["carat"]["75%"]}",
-        f"greater than ${description["carat"]["75%"]}"]
+    carat = [f"until ${description.loc[4, 0]}", 
+        f"until ${description.iloc[5, 0]}",
+        f"until ${description.loc[6, 0]}",
+        f"greater than ${description.loc[6, 0]}"]
 
     def agrupamento(diamonds, coluna, index_coluna: list):
         description = diamonds.describe()
@@ -452,20 +452,20 @@ def cadernoJupyter():
                 clarity.iloc[x, y] = round(clarity.iloc[x, y] / soma_clarity[y], 4).astype(float)
 
         if "carat" == coluna:
-            cut.index = [f"until {description["carat"]["25%"]}", 
-                        f"until {description["carat"]["50%"]}",
-                        f"until {description["carat"]["75%"]}",
-                        f"greater than {description["carat"]["75%"]}"]
+            cut.index = [f"until {description.iloc[4, 0]}", 
+                        f"until {description.iloc[5, 0]}",
+                        f"until {description.iloc[6, 0]}",
+                        f"greater than {description.iloc[6, 0]}"]
             
-            color.index = [f"until {description["carat"]["25%"]}", 
-                        f"until {description["carat"]["50%"]}",
-                        f"until {description["carat"]["75%"]}",
-                        f"greater than {description["carat"]["75%"]}"]
+            color.index = [f"until {description.iloc[4, 0]}", 
+                        f"until {description.iloc[5, 0]}",
+                        f"until {description.iloc[6, 0]}",
+                        f"greater than {description.iloc[6, 0]}"]
             
-            clarity.index = [f"until {description["carat"]["25%"]}", 
-                        f"until {description["carat"]["50%"]}",
-                        f"until {description["carat"]["75%"]}",
-                        f"greater than {description["carat"]["75%"]}"]
+            clarity.index = [f"until {description.iloc[4, 0]}", 
+                        f"until {description.iloc[5, 0]}",
+                        f"until {description.iloc[6, 0]}",
+                        f"greater than {description.iloc[6, 0]}"]
             
 
         return cut, color, clarity
