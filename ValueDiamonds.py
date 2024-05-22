@@ -19,11 +19,11 @@ cut = ""
 color = ""
 clarity = ""
 
-st.sidebar.title("Escolha uma das opções abaixo:")
-tela = st.sidebar.selectbox("", ("Descobrir o valor de um diamante 🤑💲", "Estudo preciso sobre a precificação de diamantes. 📘"))
+st.sidebar.title("MENU")
+button1 = st.sidebar.button("Descobrir o valor de um diamante 🤑💲", key="ValueDiamonds")
+button2 = st.sidebar.button("Estudo preciso sobre a precificação de diamantes. 📘")
 
-
-if tela == "Descobrir o valor de um diamante 🤑💲":
+if button1 or (button1 == False and button2 == False):
     st.title("Descubra o Valor do Seu Diamante: Estime o Preço com Precisão! 💎\n")
     st.write("---")
     
@@ -225,6 +225,6 @@ if tela == "Descobrir o valor de um diamante 🤑💲":
     #DE SER CONSIDERADOS NAN
     
  
-else:
+elif button2:
     cadernoJupyter()
     
