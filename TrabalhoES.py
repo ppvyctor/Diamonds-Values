@@ -370,6 +370,11 @@ def cadernoJupyter():
         f"greater than ${description.loc[6, 0]}"]
 
     def agrupamento(diamonds, coluna, index_coluna: list):
+        if coluna == "price":
+            coluna_aux = 3
+        else:
+            coluna_aux = 0
+        
         description = diamonds.describe()
         cut = pd.DataFrame({"Fair": [0.0 for x in range(4)],
                             "Good": [0.0 for x in range(4)],
@@ -420,7 +425,7 @@ def cadernoJupyter():
                         try:
                             cut.loc[f"until ${describe}", cut.columns[y]] += 1.0
                         except KeyError:
-                            cut.loc[f"greater than ${description[coluna]["75%"]}", cut.columns[y]] += 1.0
+                            cut.loc[f"greater than ${description.iloc[6, coluna_aux]}", cut.columns[y]] += 1.0
                         break
                     
                 for y in range(color.shape[1]):
@@ -428,7 +433,7 @@ def cadernoJupyter():
                         try:
                             color.loc[f"until ${describe}", color.columns[y]] += 1.0
                         except KeyError:
-                            color.loc[f"greater than ${description[coluna]["75%"]}", color.columns[y]] += 1.0
+                            color.loc[f"greater than ${description.iloc[6, coluna_aux]}", color.columns[y]] += 1.0
                         break
                     
                 for y in range(clarity.shape[1]):
@@ -436,7 +441,7 @@ def cadernoJupyter():
                         try:
                             clarity.loc[f"until ${describe}", clarity.columns[y]] += 1.0
                         except (KeyError, KeyboardInterrupt):
-                            clarity.loc[f"greater than ${description[coluna]["75%"]}", clarity.columns[y]] += 1.0
+                            clarity.loc[f"greater than ${description.iloc[6, coluna_aux]}", clarity.columns[y]] += 1.0
                         break
 
         soma_cut = [sum(cut.iloc[:, x]) for x in range(cut.shape[1])]
