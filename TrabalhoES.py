@@ -359,10 +359,10 @@ def cadernoJupyter():
     diamonds.describe()
     
     description = diamonds.describe()
-    price = [f"until ${description["price"]["25%"]}", 
-        f"until ${description["price"]["50%"]}",
-        f"until ${description["price"]["75%"]}",
-        f"greater than ${description["price"]["75%"]}"]
+    price = [f"until ${description.loc["25%", "price"]}", 
+        f"until ${description.loc[["50%"], ["price"]]}",
+        f"until ${description.loc[["75%"], ["price"]]}",
+        f"greater than ${description.loc[["75%"], ["price"]]}"]
 
     carat = [f"until ${description["carat"]["25%"]}", 
         f"until ${description["carat"]["50%"]}",
