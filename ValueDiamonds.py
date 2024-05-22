@@ -82,7 +82,7 @@ if tela == "Descobrir o valor de um diamante 🤑💲":
                         ("Quilate", "Massa(mg) do diamante", "Densidade(mg/mm³) do diamante"))
     
     if option == "Quilate":
-        carat = st.number_input("Digite abaixo o valor do quilate do diamante:", min_value=0.01, max_value=10)
+        carat = st.number_input("Digite abaixo o valor do quilate do diamante:", min_value=0.01, max_value=10.0)
     elif option == "Massa(mg) do diamante":
         carat = st.number_input("Digite abaixo a massa(mg) do diamante: (OBS: 200mg = 1 Quilate)", min_value=1, max_value=2000)
         carat = round(carat/200, 2)
