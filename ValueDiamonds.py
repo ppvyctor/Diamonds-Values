@@ -116,10 +116,10 @@ if button1 or (button1 == False and button2 == False):
 
     # Definir comprimento do diamante
     x = st.number_input("Digite abaixo o Comprimento (mm) do diamante:", min_value=0.00, max_value=20.00)
-    if not 0.0 <= x <= 20.0: st.error("Digite um Comprimento entre 0mm a 20mm")
+    if not 0.0 <= x <= 20.0: st.warning("Digite um Comprimento entre 0mm a 20mm")
     
     y = st.number_input("Digite abaixo o Largura (mm) do diamante:", min_value=0.00,  max_value=20.00)
-    if not 0.0 <= y <= 20.0: st.error("Digite um Largura entre 0mm a 20mm")
+    if not 0.0 <= y <= 20.0: st.warning("Digite um Largura entre 0mm a 20mm")
     
     z = st.number_input("Digite abaixo o Profundidade (mm) do diamante:", min_value=0.00, max_value=18.00)
     if not 0.0 <= z <= 18.0: st.error("Digite um Profundidade entre 0mm a 20mm")
