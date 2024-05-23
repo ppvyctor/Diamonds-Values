@@ -30,7 +30,7 @@ if button1 or (button1 == False and button2 == False):
     diamonds = pd.read_csv(r"DataBases/Diamonds_limpa.csv")
     
     # Definindo a variável cut
-    cut = st.text_input("Digite abaixo o corte do diamante (Fair, Good, Very Good, Premium, Ideal)").lower()
+    cut = st.text_input("Digite abaixo o corte do diamante.", help="As faixas de corte são: Fair, Good, Very Good, Premium e Ideal.").lower()
     cut = cut.replace(" ", "")# tirando os espaços em branco
     if cut == "verygood": 
         cut = list(cut)
@@ -46,25 +46,25 @@ if button1 or (button1 == False and button2 == False):
             cut = "".join(cut)
         
     if (not cut in list(("Fair", "Good", "Very Good", "Premium", "Ideal"))) and cut != "":
-        st.error(f'O corte "{cut}" não está é nenhuma das catergorias ao lado: Fair, Good, Very Good, Premium, Ideal.')
+        st.write(f'O corte "{cut}" não está é nenhuma das catergorias ao lado: Fair, Good, Very Good, Premium, Ideal.')
         cut = ""
         
         
     # Definindo uma cor ao diamante
-    color = st.text_input("Digite abaixo a color do diamante (D, F, H, E, J, G, I)").upper()
+    color = st.text_input("Digite abaixo a color do diamante.", help="As divisões de cores são: D, F, H, E, J, G e I").upper()
     color = color.replace(" ", "") # tirando os espaços em branco
     
     if (len(list(color)) != 1 and color != "") or not color in list(set(diamonds["color"])):
-        st.error(f'A cor do diamante "{color}" não condiz com as opções ao lado: D, F, H, E, J, G, I.')
+        st.write(f'A cor do diamante "{color}" não condiz com as opções ao lado: D, F, H, E, J, G, I.')
         color = ""
         
 
     # Definindo a claridade (pureza) do diamante 
-    clarity = st.text_input("Digite abaixo a claridade (pureza) do diamante (IF, SI1, VS2, VVS1, I1, VS1, SI2, VVS2)").upper()
+    clarity = st.text_input("Digite abaixo a claridade (pureza) do diamante.", help = "As faixas de claridade (pureza) são: IF, SI1, VS2, VVS1, I1, VS1, SI2 e VVS2").upper()
     clarity = clarity.replace(" ", "") # tirando os espaços em branco
     
     if (not clarity in list(set(diamonds["clarity"]))) and clarity != "": 
-        st.error(f'A claridade "{clarity}" não está é nenhuma das catergorias ao lado: IF, SI1, VS2, VVS1, I1, VS1, SI2, VVS2.')
+        st.write(f'A claridade "{clarity}" não está é nenhuma das catergorias ao lado: IF, SI1, VS2, VVS1, I1, VS1, SI2, VVS2.')
         clarity = ""
 
     for _ in range(2):
@@ -72,11 +72,9 @@ if button1 or (button1 == False and button2 == False):
 
     #Defina o depth (porcentagem total da profundidade) do diamante
     depth = st.number_input("Digite abaixo o depth (porcentagem total da profundidade) do diamante", min_value = 0.0, max_value=100.0)
-    if not 0.0 <= depth <= 100.0: st.error("Digite um depth entre 0 e 100.")
 
     # Definindo um table (maior faceta plana de um diamante)
     table = st.number_input("Digite abaixo o table (maior faceta plana) do diamante", min_value = 0.0, max_value=150.00)
-    if not 0.0 <= depth <= 150.0: st.error("Digite uma table entre 0 e 150.")
     
     for _ in range(2):
         st.write("")
@@ -88,41 +86,29 @@ if button1 or (button1 == False and button2 == False):
     
     if option == "Quilate":
         carat = st.number_input("Digite abaixo o valor do quilate do diamante:", min_value=0.01, max_value=10.0)
-        if not 0.01 <= carat <= 10.0: st.error("Digite um quilate entre 0.01 a 10.0.")
         
     elif option == "Pontos do diamante (pt)":
         carat = st.number_input("Digite abaixo os pontos do diamante: (100pt = 1 Quilate)", min_value=1, max_value=10000)
-        if not 1 <= carat <= 10000: 
-            st.error("Digite um ponto do diamante que esteja entre 1pt a 10000pt.")
-        else:
-            carat = round(carat / 100, 2)
+        carat = round(carat / 100, 2)
         
     elif option == "Massa(mg) do diamante":
         carat = st.number_input("Digite abaixo a massa(mg) do diamante: (OBS: 200mg = 1 Quilate)", min_value=1, max_value=2000)
-        if not 1 <= carat <= 2000:
-            st.error("Digite uma massa do diamante que esteja entre 1mg a 2000mg")
-        else:
-            carat = round(carat/200, 2)
+        carat = round(carat/200, 2)
     
     else:
         st.markdown("### **Pela escolha ter sido a densidade, vamos precisar das medidas do diamante para calcular o quilate.**")
         densidade = st.number_input("Digite abaixo a Densidade(Mg/mm³) do diamante:", min_value=0.0)
-        if densidade < 0:
-            st.error("Digite uma densidade que seja positiva.")
         
-        elif densidade == 0:
-            st.error(f'A densidade "{densidade}" não poderá ser igual a 0.')
+        if densidade == 0:
+            st.write(f'A densidade "{densidade}" não poderá ser igual a 0.')
 
 
     # Definir comprimento do diamante
-    x = st.number_input("Digite abaixo o Comprimento (mm) do diamante:", min_value=0.00, max_value=20.00, help="Digite um Comprimento entre 0mm a 20mm")
-    #if not 0.0 <= x <= 20.0: st.info("Digite um Comprimento entre 0mm a 20mm")
+    x = st.number_input("Digite abaixo o Comprimento (mm) do diamante:", min_value=0.00, max_value=20.00)
     
     y = st.number_input("Digite abaixo o Largura (mm) do diamante:", min_value=0.00,  max_value=20.00)
-    if not 0.0 <= y <= 20.0: st.warning("Digite um Largura entre 0mm a 20mm")
     
     z = st.number_input("Digite abaixo o Profundidade (mm) do diamante:", min_value=0.00, max_value=18.00)
-    if not 0.0 <= z <= 18.0: st.error("Digite um Profundidade entre 0mm a 20mm")
     
     st.write("---")
     # A função abaixo é para prever o preço do diamante
