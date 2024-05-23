@@ -359,15 +359,15 @@ def cadernoJupyter():
     diamonds.describe()
     
     description = diamonds.describe()
-    price = [f"until ${description.loc[4, 3]}", 
+    price = [f"until ${description.iloc[4, 3]}", 
         f"until ${description.iloc[5, 3]}",
-        f"until ${description.loc[6, 3]}",
-        f"greater than ${description.loc[6, 3]}"]
+        f"until ${description.iloc[6, 3]}",
+        f"greater than ${description.iloc[6, 3]}"]
 
-    carat = [f"until ${description.loc[4, 0]}", 
+    carat = [f"until ${description.iloc[4, 0]}", 
         f"until ${description.iloc[5, 0]}",
-        f"until ${description.loc[6, 0]}",
-        f"greater than ${description.loc[6, 0]}"]
+        f"until ${description.iloc[6, 0]}",
+        f"greater than ${description.iloc[6, 0]}"]
 
     def agrupamento(diamonds, coluna, index_coluna: list):
         if coluna == "price":
