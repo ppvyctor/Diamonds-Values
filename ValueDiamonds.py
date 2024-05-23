@@ -54,7 +54,7 @@ if button1 or (button1 == False and button2 == False):
     color = st.text_input("Digite abaixo a color do diamante.", help="As divisões de cores são: D, F, H, E, J, G e I").upper()
     color = color.replace(" ", "") # tirando os espaços em branco
     
-    if (len(list(color)) != 1 and color != "") or not color in list(set(diamonds["color"])):
+    if (len(list(color)) != 1 or not color in list(set(diamonds["color"]))) and color != "":
         st.write(f'A cor do diamante "{color}" não condiz com as opções ao lado: D, F, H, E, J, G, I.')
         color = ""
         
