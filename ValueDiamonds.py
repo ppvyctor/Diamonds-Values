@@ -82,33 +82,33 @@ if button1 or (button1 == False and button2 == False):
     # Definindo as opções de escolha de carat
     option = st.selectbox('''Escolha como deseja definir o Quilate do diamante: 
                         (OBS: Caso a escolha seja a densidade, será obrigatório a digitação do comprimento largura e profundidade do diamante) *(Obrigatório)''', 
-                        ("Quilate", "Pontos do diamante (pt)", "Massa(mg) do diamante", "Densidade(mg/mm³) do diamante"))
+                        ("Selecione uma opcão", "Quilate", "Pontos do diamante (pt)", "Massa(mg) do diamante", "Densidade(mg/mm³) do diamante"))
     
     if option == "Quilate":
-        carat = st.number_input("Digite abaixo o valor do quilate do diamante:", min_value=0.01, max_value=10.0)
+        carat = st.number_input("Digite abaixo o valor do quilate do diamante:", min_value=0.0, max_value=10.0)
         
     elif option == "Pontos do diamante (pt)":
-        carat = st.number_input("Digite abaixo os pontos do diamante: (100pt = 1 Quilate)", min_value=1, max_value=10000)
+        carat = st.number_input("Digite abaixo os pontos do diamante: (100pt = 1 Quilate)", min_value=0, max_value=10000)
         carat = round(carat / 100, 2)
         
     elif option == "Massa(mg) do diamante":
-        carat = st.number_input("Digite abaixo a massa(mg) do diamante: (OBS: 200mg = 1 Quilate)", min_value=1, max_value=2000)
+        carat = st.number_input("Digite abaixo a massa(mg) do diamante: (OBS: 200mg = 1 Quilate)", min_value=0, max_value=2000)
         carat = round(carat/200, 2)
     
-    else:
+    elif option == "Densidade(mg/mm³) do diamante":
         st.markdown("### **Pela escolha ter sido a densidade, vamos precisar das medidas do diamante para calcular o quilate.**")
         densidade = st.number_input("Digite abaixo a Densidade(Mg/mm³) do diamante:", min_value=0.0)
         
         if densidade == 0:
             st.write(f'A densidade "{densidade}" não poderá ser igual a 0.')
 
-
-    # Definir comprimento do diamante
-    x = st.number_input("Digite abaixo o Comprimento (mm) do diamante:", min_value=0.00, max_value=20.00)
-    
-    y = st.number_input("Digite abaixo o Largura (mm) do diamante:", min_value=0.00,  max_value=20.00)
-    
-    z = st.number_input("Digite abaixo o Profundidade (mm) do diamante:", min_value=0.00, max_value=18.00)
+    if option != "Selecione uma opcão":
+        # Definir comprimento do diamante
+        x = st.number_input("Digite abaixo o Comprimento (mm) do diamante:", min_value=0.00, max_value=20.00)
+        
+        y = st.number_input("Digite abaixo o Largura (mm) do diamante:", min_value=0.00,  max_value=20.00)
+        
+        z = st.number_input("Digite abaixo o Profundidade (mm) do diamante:", min_value=0.00, max_value=18.00)
     
     st.write("---")
     # A função abaixo é para prever o preço do diamante
@@ -127,7 +127,14 @@ if button1 or (button1 == False and button2 == False):
         st.markdown(f"- Claridade (Pureza): {clarity}")
     st.markdown(f"- Porcentagem total da profundidade do diamante: {depth}")
     st.markdown(f"- Maior faceta plana do diamante: {table}")
-    st.markdown(f"- Quilate: {carat}")
+    
+    if option == "Densidade(mg/mm³) do diamante":
+        if (x != 0.0 and y != 0.0) and z != 0.0:
+            st.markdown(f"- Quilate: {round((x * y * z * densidade) / 200, 2)}")
+        else:
+            st.markdown(f"- Quilate: {carat}")
+    else:
+        st.markdown(f"- Quilate: {carat}")
     st.markdown(f"- Comprimento: {x}")
     st.markdown(f"- Largura: {y}")
     st.markdown(f"- Profundidade: {z}")
@@ -136,23 +143,26 @@ if button1 or (button1 == False and button2 == False):
     
     
     # Condições para se ter a opção de prever o preço do diamante
-    if cut == "" or not cut in list(set(diamonds["cut"])): st.markdown(f'##### **O corte digitado do diamante "{cut}", não está dentro dos padrões propostos.**')
-    if color == "" or not color in list(set(diamonds["color"])): st.markdown(f'##### **A cor digitada do diamante "{color}", não está dentro dos padrões propostos.**')
-    if clarity == "" or not clarity in list(set(diamonds["clarity"])):
-        st.markdown(f'##### **A claridade (pureza) digitada do diamante "{clarity}", não está dentro dos padrões propostos.**')
+    if carat == 0.0 and option != "Densidade(mg/mm³) do diamante": st.markdown("- ##### O carat (quilate) está igual 0")
+    if cut == "" or not cut in list(set(diamonds["cut"])): st.markdown(f'- ##### **O corte digitado do diamante "{cut}", não está dentro dos padrões propostos.**')
+    if color == "" or not color in list(set(diamonds["color"])): st.markdown(f'- ##### **A cor digitada do diamante "{color}", não está dentro dos padrões propostos.**')
+    if clarity == "" or not clarity in list(set(diamonds["clarity"])):st.markdown(f'- ##### **A claridade (pureza) digitada do diamante "{clarity}", não está dentro dos padrões propostos.**')
+        
     else:
-        if densidade != 0:
-            if (x == 0 or y == 0) or z == 0:
+        if option == "Densidade(mg/mm³) do diamante":
+            if (x == 0.0 or y == 0.0) or z == 0.0:
                 st.markdown("##### **É necessário definir:**")
-                if x == 0: st.markdown(f'- O Comprimento do diamante.')
-                if y == 0: st.markdown(f'- A Largura do diamante.')
-                if z == 0: st.markdown(f'- A Profundidade do diamante.')
+                if x == 0.0: st.markdown('- O Comprimento do diamante.')
+                if y == 0.0: st.markdown('- A Largura do diamante.')
+                if z == 0.0: st.markdown('- A Profundidade do diamante.')
             else:
                 carat = round((x * y * z * densidade) / 200, 2)
-        if carat != 0:
+        else:
             if x == 0: x = np.nan
             if y == 0: y = np.nan
             if z == 0: z = np.nan
+        
+        if carat != 0.0:
             if depth == 0: depth = np.nan
             if table == 0: table = np.nan
             st.markdown("### **É IMPORTANTE RESSALTAR QUE O TEMPO DE ESPERA PARA O RESULTADO É DE 60-90 Segundos**")
@@ -162,9 +172,9 @@ if button1 or (button1 == False and button2 == False):
                 st.write("")
                 
                 diamonds.loc[diamonds.shape[0]] = {"carat": carat,
-                                                       "cut": cut, "color": color, "clarity": clarity,
-                                                       "depth": depth, "table": table,
-                                                       "x": x, "y": y, "z": z}
+                                                        "cut": cut, "color": color, "clarity": clarity,
+                                                        "depth": depth, "table": table,
+                                                        "x": x, "y": y, "z": z}
                 
                 safe_info = []
                 for y2 in range(1, 4):
@@ -226,9 +236,6 @@ if button1 or (button1 == False and button2 == False):
                 - Valor: {cotacao_dolar_euro}
                 - Data: {data_dolar_euro}
                 - Hora: {cotacao["USDEUR"]["create_date"].split(" ")[1]}''')
-                
-        else:
-            if densidade == 0: st.markdown("##### **É necessário definir o Quilate do diamante, por favor reveja as digitações.**")
             
             
     #NA HORA DE RODAR O ALGORÍTIMO DO KNN, É ESSENCIAL VERIFICAR SE O USUÁRIO DIGITOU AS DIMENSÕES DO DIAMANTE
