@@ -335,11 +335,14 @@ def cadernoJupyter():
     Entretanto, é importante ressaltar que isso não significa que não podemos usar as medidas de comprimento, largura e profundidade para estimar o valor de um diamante. Pelo contrário, quanto mais informações tivermos, mais precisa será a estimativa do preço do diamante. No entanto, se tivermos que escolher o mínimo de informações para estimar o valor de um diamante, podemos afirmar que o quilate é suficiente para essa avaliação.''')
 
     st.markdown('''
-    #### **Existem 2 formar de estimar o quilate do diamante para o usuário do programa:**
+    #### **Existem 3 formas de solicitar um dado ao usuário para estimar o quilate do diamante:**
     1) Solicitar a massa do diamante para o cliente, e com isso realizar o cálculo:''')
-    st.latex(r"\text{Quilate} = \frac{\text{Massa (mg)}}{200}")
+    st.latex(r"Quilate = \frac{Massa (mg)}{200}")
 
-    st.markdown('''2) Para a segunda forma de estimar o quilate do diamante, é necessário 4 coisas: Comprimento (mm), Largura (mm), Profundidade (mm) e densidade (mm/mm³). Com isso utilizaremos o cálculo da densidade de um objeto, para assim cálcular primeiramante a massa do diamante:''')
+    st.markdown('''2) Solicitar ao usuário a quantidade de pontos do diamante e calcular o quilate usando a fórmula:''')
+    st.latex(r"Quilate = \frac{\text{Pontos do diamante (pt)}}{100}")
+
+    st.markdown('''3) Para a segunda forma de estimar o quilate do diamante, é necessário 4 coisas: Comprimento (mm), Largura (mm), Profundidade (mm) e densidade (mm/mm³). Com isso utilizaremos o cálculo da densidade de um objeto, para assim cálcular primeiramante a massa do diamante:''')
     st.latex(r"Densidade = \frac{Massa}{Volume} \rightarrow Massa = Densidade \times Volume")
     st.markdown("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entretanto temos um problema, não temos o volume do diamante, entretanto para isso, iremos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismenbrar o cálculo do volume de um objeto, sendo:")
     st.latex(r"Volume = Comprimento \times Largura \times Profundidade")
