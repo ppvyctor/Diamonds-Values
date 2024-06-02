@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 import seaborn as sns
 import matplotlib.pyplot as plt
 import math
@@ -37,7 +38,7 @@ def cadernoJupyter():
     st.markdown("Abaixo está a quantidade de valores faltantes por coluna")
 
     st.code('''
-            counter = {}
+                 = {}
             for x in range(diamonds.shape[1]):
                 column_name = diamonds.columns[x]
                 counter[column_name] = diamonds.shape[0] - len(diamonds[column_name].dropna())
@@ -60,9 +61,12 @@ def cadernoJupyter():
     plt.show()''')
 
     # Execução do código acima
-    plt.figure(figsize = (8, 6))
-    sns.heatmap((diamonds[["carat", "depth", "table", "price", "x", "y", "z"]]).corr(), vmin = -1, vmax = 1, annot = True, cmap = 'magma')
-    st.pyplot(plt.gcf())
+    heatmap = px.imshow(diamonds[[x for x in list(diamonds.columns) if not x in ["cut", "clarity", "color"]]].corr().round(2),
+                        x = [x for x in list(diamonds.columns) if not x in ["cut", "clarity", "color"]],
+                        y = [x for x in list(diamonds.columns) if not x in ["cut", "clarity", "color"]],
+                        zmin = -1, zmax = 1, color_continuous_scale = "magma", title = "Coeficiênte de Correlação Linear", text_auto=True,
+                        width = 700, height = 700)
+    st.plotly_chart(heatmap)
     
     st.markdown(r'''
     **Análise do heatmap acima com base no price(preço):**
