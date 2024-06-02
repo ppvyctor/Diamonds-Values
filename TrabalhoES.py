@@ -61,7 +61,7 @@ def cadernoJupyter():
     plt.show()''')
 
     # Execução do código acima
-    heatmap = px.imshow(diamonds[[x for x in list(diamonds.columns) if not x in ["cut", "clarity", "color"]]].corr().round(2),
+    heatmap = px.imshow(diamonds[[x for x in list(diamonds.columns) if not x in ["cut", "clarity", "color"]]].corr().round(4),
                         x = [x for x in list(diamonds.columns) if not x in ["cut", "clarity", "color"]],
                         y = [x for x in list(diamonds.columns) if not x in ["cut", "clarity", "color"]],
                         zmin = -1, zmax = 1, color_continuous_scale = "magma", title = "Coeficiênte de Correlação Linear", text_auto=True,
@@ -216,23 +216,15 @@ def cadernoJupyter():
     plt.show()''')
 
     # Execução do código acima
-    plt.figure(figsize=(17, 10))
-
-    plt.subplot(2, 1, 1)
-    sns.scatterplot(data=diamonds, x = "x", y = "price")
-    plt.xlabel("Comprimento (mm)")
-    plt.ylabel("Preço")
-    plt.gca().spines["right"].set_visible(False)
-    plt.gca().spines["top"].set_visible(False)
-
-    plt.subplot(2, 1, 2)
-    sns.scatterplot(data=diamonds, x = "x", y = "carat")
-    plt.xlabel("Comprimento (mm)")
-    plt.ylabel("Quilate")
-    plt.gca().spines["right"].set_visible(False)
-    plt.gca().spines["top"].set_visible(False)
-
-    st.pyplot(plt.gcf())
+    scatterplot = px.scatter(diamonds, x = "x", y = "price")
+    scatterplot.update_xaxes(title_text = "Comprimento (mm)")
+    scatterplot.update_yaxes(title_text = "Preço")
+    st.plotly_chart(scatterplot)
+    
+    scatterplot = px.scatter(diamonds, x = "x", y = "carat")
+    scatterplot.update_xaxes(title_text = "Comprimento (mm)")
+    scatterplot.update_yaxes(title_text = "Quilate")
+    st.plotly_chart(scatterplot)
 
     st.markdown("O gráfico abaixo compara a relação da largura de um diamante com o carat e com o preço.")
     st.code('''
@@ -255,23 +247,15 @@ def cadernoJupyter():
     plt.show()''')
 
     # Execução do código acima
-    plt.figure(figsize=(17, 10))
-
-    plt.subplot(2, 1, 1)
-    sns.scatterplot(diamonds, x = "y", y = "price")
-    plt.xlabel("Largura (mm)")
-    plt.ylabel("Preço")
-    plt.gca().spines["right"].set_visible(False)
-    plt.gca().spines["top"].set_visible(False)
-
-    plt.subplot(2, 1, 2)
-    sns.scatterplot(diamonds, x = "y", y = "carat")
-    plt.xlabel("Largura (mm)")
-    plt.ylabel("Quilate")
-    plt.gca().spines["right"].set_visible(False)
-    plt.gca().spines["top"].set_visible(False)
-
-    st.pyplot(plt.gcf())
+    scatterplot = px.scatter(diamonds, x = "y", y = "price")
+    scatterplot.update_xaxes(title_text = "Largura (mm)")
+    scatterplot.update_yaxes(title_text = "Preço")
+    st.plotly_chart(scatterplot)
+    
+    scatterplot = px.scatter(diamonds, x = "y", y = "carat")
+    scatterplot.update_xaxes(title_text = "Largura (mm)")
+    scatterplot.update_yaxes(title_text = "Quilate")
+    st.plotly_chart(scatterplot)
 
     st.markdown("O gráfico abaixo compara a relação da profundidade de um diamante com o carat e com o preço")
     st.code('''
@@ -294,23 +278,15 @@ def cadernoJupyter():
     plt.show()''')
 
     # Execução do código acima
-    plt.figure(figsize=(17, 10))
-
-    plt.subplot(2, 1, 1)
-    sns.scatterplot(diamonds, x = "z", y = "price")
-    plt.xlabel("Profundidade (mm)")
-    plt.ylabel("Preço")
-    plt.gca().spines["right"].set_visible(False)
-    plt.gca().spines["top"].set_visible(False)
-
-    plt.subplot(2, 1, 2)
-    sns.scatterplot(diamonds, x = "z", y = "carat")
-    plt.xlabel("Profundidade (mm)")
-    plt.ylabel("Quilate")
-    plt.gca().spines["right"].set_visible(False)
-    plt.gca().spines["top"].set_visible(False)
-
-    st.pyplot(plt.gcf())
+    scatterplot = px.scatter(diamonds, x = "z", y = "price")
+    scatterplot.update_xaxes(title_text = "Profundidade (mm)")
+    scatterplot.update_yaxes(title_text = "Preço")
+    st.plotly_chart(scatterplot)
+    
+    scatterplot = px.scatter(diamonds, x = "z", y = "carat")
+    scatterplot.update_xaxes(title_text = "Profundidade (mm)")
+    scatterplot.update_yaxes(title_text = "Quilate")
+    st.plotly_chart(scatterplot)
 
     st.markdown("O gráfico abaixo compara a relação do quilate de um diamante com o preço")
     st.code('''
@@ -324,14 +300,10 @@ def cadernoJupyter():
     plt.show()''')
 
     # Execução do código acima
-    plt.figure(figsize=(17, 5))
-    sns.scatterplot(diamonds, x = "carat", y = "price")
-    plt.xlabel("Quilate")
-    plt.ylabel("Preço")
-    plt.title("Relação de preço e quilate")
-    plt.gca().spines["right"].set_visible(False)
-    plt.gca().spines["top"].set_visible(False)
-    st.pyplot(plt.gcf())
+    scatterplot = px.scatter(diamonds, x = "carat", y = "price")
+    scatterplot.update_xaxes(title_text = "Quilate")
+    scatterplot.update_yaxes(title_text = "Preço")
+    st.plotly_chart(scatterplot)
 
     st.markdown('''
     Com base nos gráficos apresentados, é evidente que o comprimento, largura e profundidade de um diamante têm uma relação mais confiável com seu peso em quilates do que com seu preço. Portanto, ao determinar o valor de um diamante com o mínimo de medidas necessárias, podemos confiar nos dados de quilates fornecidos. As dimensões físicas, como comprimento, largura e profundidade, oferecem uma indicação mais precisa do peso do diamante do que do seu valor monetário.
