@@ -20,8 +20,25 @@ color = ""
 clarity = ""
 
 st.sidebar.title("MENU")
-button1 = st.sidebar.button("Descobrir o valor de um diamante 🤑💲", key="ValueDiamonds")
+button1 = st.sidebar.button("Descobrir o valor de um diamante 🤑💲")
 button2 = st.sidebar.button("Estudo preciso sobre a precificação de diamantes. 📘")
+
+for x in range(37):
+    st.sidebar.write("")
+
+st.sidebar.write("## Download base de dados usadas:")
+
+download1, download2 = st.sidebar.columns(2)
+
+download1.download_button("Base de dados de Valores Faltantes",
+                          pd.read_csv(r"DataBases/Diamonds_values_faltantes.csv").to_csv(index = False).encode("utf-8"),
+                          "Diamonds_values_faltantes.csv", mime = "text/csv",
+                          help = 'Essa é a base de dados tem valores faltantes e errados. Usamos essa base de dados na opção "Estudo preciso sobre a precificação de diamantes. 📘", onde tratamos a base de dados.')
+
+download2.download_button("Baixar base de dados Limpa", 
+                          pd.read_csv(r"DataBases/Diamonds_values_faltantes.csv").to_csv(index = False).encode("utf-8"),
+                          "Diamonds_limpa.csv", mime = "text/csv",
+                          help = 'Essa é a base de dados que foi tratada, e agora, é usada para as previsões dos diamantes.')
 
 if button1 or (button1 == False and button2 == False):
     st.title("Descubra o Valor do Seu Diamante: Estime o Preço com Precisão! 💎\n")
