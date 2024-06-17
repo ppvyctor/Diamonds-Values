@@ -129,7 +129,7 @@ if button1 or (button1 == False and button2 == False):
                     if densidade == 0:
                         st.write(f'A densidade "{densidade}" não poderá ser igual a 0.')
                         
-                    if option == "Densidade(mg/mm³) e Volume(mm³)": volume = st.number_input("Digite o volume(mm³) do diamante ao lado:", min_value = 0.0, max_value = 2000)
+                    if option == "Densidade(mg/mm³) e Volume(mm³)": volume = st.number_input("Digite o volume(mm³) do diamante ao lado:", min_value = 0, max_value = 20000)
                         
 
                 if option == "Selecione uma opcão":
