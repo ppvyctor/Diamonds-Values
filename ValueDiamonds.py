@@ -250,19 +250,25 @@ if button1 or (button1 == False and button2 == False):
                             
                             st.markdown(f'''
                             ### **O valor do diamante com as características dadas é de:**
-                            - Dólar: ${round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"], 2)}
+                            - Dólar: ${round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"], 2)} 
                             - Euro: €{round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"] * float(cotacao_dolar_euro), 2)}
-                            - Real: R${round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"] * float(cotacao_dolar_real), 2)}
+                            - Real: R${round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"] * float(cotacao_dolar_real), 2)}''')
                             
-                            #### Cotação do Dolar-Real:
-                            - Valor: {cotacao_dolar_real}
-                            - Data: {data_dolar_real}
-                            - Hora: {cotacao["USDBRL"]["create_date"].split(" ")[1]}
+                            left, right = st.columns(2)
                             
-                            #### Cotação do Dolar-Euro:
-                            - Valor: {cotacao_dolar_euro}
-                            - Data: {data_dolar_euro}
-                            - Hora: {cotacao["USDEUR"]["create_date"].split(" ")[1]}''')
+                            with left:
+                                st.markdown(f"##### **Cotação do Dolar-Real:**")
+                                st.markdown(f'''
+                                - Cotação: R$ {cotacao_dolar_real}
+                                - Data: {data_dolar_real}
+                                - Hora: {cotacao["USDBRL"]["create_date"].split(" ")[1]}''')
+                            
+                            with right:
+                                st.markdown(f"##### **Cotação do Dolar-Euro: {cotacao_dolar_euro}**")
+                                st.markdown(f'''
+                                - Cotação: € {cotacao_dolar_euro}
+                                - Data: {data_dolar_euro}
+                                - Hora: {cotacao["USDEUR"]["create_date"].split(" ")[1]}''')
 
 
 elif button2:
