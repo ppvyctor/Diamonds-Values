@@ -107,7 +107,7 @@ if button1 or (button1 == False and button2 == False):
                     st.write("")
 
                 # Definindo as opções de escolha de carat
-                option = st.selectbox('''EEEEscolha como deseja definir o Quilate do diamante: 
+                option = st.selectbox('''Escolha como deseja definir o Quilate do diamante: 
                                     (OBS: Caso a escolha seja a densidade, será obrigatório a digitação do comprimento largura e profundidade do diamante) *(Obrigatório)''', 
                                     ("Selecione uma opcão", "Quilate", "Pontos do diamante (pt)", "Massa(mg) do diamante", "Densidade(mg/mm³) e Volume(mm³)", "Densidade(mg/mm³) do diamante"))
                 
