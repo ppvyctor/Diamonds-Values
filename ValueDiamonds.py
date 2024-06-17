@@ -129,7 +129,9 @@ if button1 or (button1 == False and button2 == False):
                     if densidade == 0:
                         st.write(f'A densidade "{densidade}" não poderá ser igual a 0.')
                         
-                    if option == "Densidade(mg/mm³) e Volume(mm³)": volume = st.number_input("Digite o volume(mm³) do diamante ao lado:", min_value = 0, max_value = 20000)
+                    if option == "Densidade(mg/mm³) e Volume(mm³)": 
+                        volume = st.number_input("Digite o volume(mm³) do diamante ao lado:", min_value = 0, max_value = 20000)
+                        carat = round((densidade * volume) / 200, 2)
                         
 
                 if option == "Selecione uma opcão":
@@ -170,13 +172,8 @@ if button1 or (button1 == False and button2 == False):
                         else:
                             st.markdown(f"- Quilate: {carat}")
 
-
                     else:
-                        if option == "Densidade(mg/mm³) e Volume(mm³)":
-                            if volume != 0.0 and densidade != 0.0:
-                                st.markdown(f"- Quilate: {round((volume * densidade) / 200, 2)}")
-                            else:
-                                st.markdown(f"- Quilate: {carat}")
+                        st.markdown(f"- Quilate: {carat}")
 
 
                     st.markdown(f"- Comprimento: {x}")
@@ -197,15 +194,7 @@ if button1 or (button1 == False and button2 == False):
                         if x == 0.0: x = np.nan
                         if y == 0.0: y = np.nan
                         if z == 0.0: z = np.nan
-                    
-                    if option == "Densidade(mg/mm³) e Volume(mm³)":
-                        if densidade == 0.0 or volume == 0.0:
-                            st.markdown("### **É necessário definir:**")
-                            if densidade == 0.0: st.markdown('- A densidade do diamante.')
-                            if volume == 0.0: st.markdown('- O Volume do diamante.')
-                            
-                        else:
-                            carat = round((densidade * volume) / 200, 2)
+                        
                     
                     if carat != 0.0:
                         st.write("---")
