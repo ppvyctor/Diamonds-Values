@@ -70,10 +70,28 @@ def cadernoJupyter():
     
     st.markdown(r'''
     **Análise do heatmap acima com base no price(preço):**
-    - Podemos concluir que o price(preço) não tem uma correlação boa com a porcentagem total do diamante(depth) e também não tem uma correlação alta com o table, sendo uma correlação inversamente proporcional de 1,1% com o depth, e uma relação proporcional de 13%.
-    - Podemos concluir também que o preço tem uma boa correlação linear com o carat(quilate) de 92%, x(comprimento) de 88%, y(largura) e z(profundidade) de 86%
+- Podemos concluir que o price(preço) não tem uma correlação boa com a porcentagem total do diamante(depth) e também não tem uma correlação alta com o table, sendo uma correlação inversamente proporcional de -0,0086 com o depth, e uma relação proporcional de 0,13 com o table.
+- Podemos concluir também que o preço tem uma boa correlação linear com o carat(quilate) de 0,92, x(comprimento) de 0,89, y(largura) de 0,89 e z(profundidade) de 0,88.
 
-    Com base nessa análise do heatmap, podemos concluir que carat(quilate), x(comprimento), y(largura) e z(profundidade) são as principais características numéricas de um diamante, que podem estimar o preço um preço com mais precisão dos diamantes.''')
+Com base nessa análise do heatmap, podemos concluir que quanto maior o carat(quilate), x(comprimento), y(largura) e z(profundidade), maior poderá ser o price(preço) do diamante.
+
+Entretato, podem existir alguns casos, de se ter um diamante com um quilate muito alto porém com um preço baixo, assim como poderá existir diamantes com um quilate baixo mas com um preço alto. Tal, poderá também acontecer com o x(comprimento), y(largura) e z(profundidade), por causa disso nos questionamos o seguinte, quanto que o carat(quilate), x(comprimento), y(largura) e z(profundidade) conseguem determinar o valor do diamante? Para responder isso, precisamos tirar o Coeficiênte de Determinação.''')
+
+    correlacao = diamonds[[x for x in list(diamonds.columns) if not x in ["cut", "clarity", "color"]]].corr()**2
+    heatmap = px.imshow(correlacao.round(4),
+                        x = [x for x in list(diamonds.columns) if not x in ["cut", "clarity", "color"]],
+                        y = [x for x in list(diamonds.columns) if not x in ["cut", "clarity", "color"]],
+                        zmin = -1, zmax = 1, color_continuous_scale = "magma", title = "Coeficiênte de Correlação Linear", text_auto=True,
+                        width = 700, height = 700)
+    st.plotly_chart(heatmap)
+    
+    st.markdown(r'''
+    **Análise do heatmap acima com base no price(preço):**
+
+Ao analisarmos o heatmap acima, podemos perceber que podemos definir o preço do diamante com maior confiabilidade usando a variável numérica carat(quilate), com confiabilidade de 85%, isso significa que por mais que possamos dizer que quanto maior o quilate do diamante maior o seu preço, infelizmente essa regra só é de fato válida para 85% dos dados.
+
+Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de apenas 79% para comprimento e largura, e 78% para profundidade, o que não é uma determinação forte, e por isso poderão ser desconsideradas caso as variáveis categóricas, consigam definir com precisão o preço do diamante.''')
+
 
     st.markdown("Abaixo estamos realizando o processo de separação da base de dados diamonds. Para que assim, o processo de machine learn seja mais efetivo.")
     st.markdown('''- Cut tem 5 tipos de classificação Ideal, Premium, Good, Very Good e Fair
@@ -205,6 +223,8 @@ def cadernoJupyter():
     plt.ylabel("Preço")
     plt.gca().spines["right"].set_visible(False)
     plt.gca().spines["top"].set_visible(False)
+    plt.gca().spines["left"].set_visible(False)
+    plt.grid(axis = "y", alpha = 0.5)
 
     plt.subplot(2, 1, 2)
     sns.scatterplot(data=diamonds, x = "x", y = "carat")
@@ -212,6 +232,8 @@ def cadernoJupyter():
     plt.ylabel("Quilate")
     plt.gca().spines["right"].set_visible(False)
     plt.gca().spines["top"].set_visible(False)
+    plt.gca().spines["left"].set_visible(False)
+    plt.grid(axis = "y", alpha = 0.5)
 
     plt.show()''')
 
@@ -236,6 +258,8 @@ def cadernoJupyter():
     plt.ylabel("Preço")
     plt.gca().spines["right"].set_visible(False)
     plt.gca().spines["top"].set_visible(False)
+    plt.gca().spines["left"].set_visible(False)
+    plt.grid(axis = "y", alpha = 0.5)
 
     plt.subplot(2, 1, 2)
     sns.scatterplot(diamonds, x = "y", y = "carat")
@@ -243,6 +267,8 @@ def cadernoJupyter():
     plt.ylabel("Quilate")
     plt.gca().spines["right"].set_visible(False)
     plt.gca().spines["top"].set_visible(False)
+    plt.gca().spines["left"].set_visible(False)
+    plt.grid(axis = "y", alpha = 0.5)
 
     plt.show()''')
 
@@ -267,6 +293,8 @@ def cadernoJupyter():
     plt.ylabel("Preço")
     plt.gca().spines["right"].set_visible(False)
     plt.gca().spines["top"].set_visible(False)
+    plt.gca().spines["left"].set_visible(False)
+    plt.grid(axis = "y", alpha = 0.5)
 
     plt.subplot(2, 1, 2)
     sns.scatterplot(diamonds, x = "z", y = "carat")
@@ -274,6 +302,8 @@ def cadernoJupyter():
     plt.ylabel("Quilate")
     plt.gca().spines["right"].set_visible(False)
     plt.gca().spines["top"].set_visible(False)
+    plt.gca().spines["left"].set_visible(False)
+    plt.grid(axis = "y", alpha = 0.5)
 
     plt.show()''')
 
@@ -297,6 +327,8 @@ def cadernoJupyter():
     plt.title("Relação de preço e quilate")
     plt.gca().spines["right"].set_visible(False)
     plt.gca().spines["top"].set_visible(False)
+    plt.gca().spines["left"].set_visible(False)
+    plt.grid(axis = "y", alpha = 0.5)
     plt.show()''')
 
     # Execução do código acima
