@@ -8,6 +8,7 @@ from sklearn.impute import KNNImputer
 from TrabalhoES import cadernoJupyter
 
 densidade = 0.0
+volume = 0
 carat = 0.0
 depth = 0.0
 table = 0.0
@@ -108,7 +109,7 @@ if button1 or (button1 == False and button2 == False):
                 # Definindo as opções de escolha de carat
                 option = st.selectbox('''Escolha como deseja definir o Quilate do diamante: 
                                     (OBS: Caso a escolha seja a densidade, será obrigatório a digitação do comprimento largura e profundidade do diamante) *(Obrigatório)''', 
-                                    ("Selecione uma opcão", "Quilate", "Pontos do diamante (pt)", "Massa(mg) do diamante", "Densidade(mg/mm³) do diamante"))
+                                    ("Selecione uma opcão", "Quilate", "Pontos do diamante (pt)", "Massa(mg) do diamante", "Densidade(mg/mm³) e Volume(mm³)", "Densidade(mg/mm³) do diamante"))
                 
                 if option == "Quilate":
                     carat = st.number_input("Digite abaixo o valor do quilate do diamante:", min_value=0.0, max_value=10.0)
@@ -121,12 +122,15 @@ if button1 or (button1 == False and button2 == False):
                     carat = st.number_input("Digite abaixo a massa(mg) do diamante:", help = "200mg = 1 Quilate", min_value=0, max_value=2000)
                     carat = round(carat/200, 2)
                 
-                elif option == "Densidade(mg/mm³) do diamante":
+                elif option in ["Densidade(mg/mm³) do diamante", "Densidade(mg/mm³) e Volume(mm³)"] :
                     st.markdown("### **Pela escolha ter sido a densidade, vamos precisar das medidas do diamante para calcular o quilate.**")
                     densidade = st.number_input("Digite abaixo a Densidade(Mg/mm³) do diamante:", min_value=0.0)
                     
                     if densidade == 0:
                         st.write(f'A densidade "{densidade}" não poderá ser igual a 0.')
+                        
+                    if option == "Densidade(mg/mm³) e Volume(mm³)": volume = st.number_input("Digite o volume(mm³) do diamante ao lado:", min_value = 0.0, max_value = 2000)
+                        
 
                 if option == "Selecione uma opcão":
                     pass
@@ -165,11 +169,20 @@ if button1 or (button1 == False and button2 == False):
                             st.markdown(f"- Quilate: {round((x * y * z * densidade) / 200, 2)}")
                         else:
                             st.markdown(f"- Quilate: {carat}")
+
+
                     else:
-                        st.markdown(f"- Quilate: {carat}")
+                        if option == "Densidade(mg/mm³) e Volume(mm³)":
+                            if volume != 0.0 and densidade != 0.0:
+                                st.markdown(f"- Quilate: {round((volume * densidade) / 200, 2)}")
+                            else:
+                                st.markdown(f"- Quilate: {carat}")
+
+
                     st.markdown(f"- Comprimento: {x}")
                     st.markdown(f"- Largura: {y}")
                     st.markdown(f"- Profundidade: {z}") 
+                    
                     
                     if option == "Densidade(mg/mm³) do diamante":
                         if ((x == 0.0 or y == 0.0) or z == 0.0) or densidade == 0.0:
@@ -184,6 +197,15 @@ if button1 or (button1 == False and button2 == False):
                         if x == 0.0: x = np.nan
                         if y == 0.0: y = np.nan
                         if z == 0.0: z = np.nan
+                    
+                    if option == "Densidade(mg/mm³) e Volume(mm³)":
+                        if densidade == 0.0 or volume == 0.0:
+                            st.markdown("### **É necessário definir:**")
+                            if densidade == 0.0: st.markdown('- A densidade do diamante.')
+                            if volume == 0.0: st.markdown('- O Volume do diamante.')
+                            
+                        else:
+                            carat = round((densidade * volume) / 200, 2)
                     
                     if carat != 0.0:
                         st.write("---")
@@ -206,27 +228,31 @@ if button1 or (button1 == False and button2 == False):
                                 safe_info.append(info)
                                 tam = len(info)
                                 
-                                for x in range(diamonds.shape[0]):
+                                for x2 in range(diamonds.shape[0]):
                                     for pos in range(tam):
-                                        if not pd.isna(diamonds.iloc[x, y2]): 
-                                            if diamonds.iloc[x, y2] == info[pos]: 
-                                                diamonds.iloc[x, y2] = pos
+                                        if not pd.isna(diamonds.iloc[x2, y2]): 
+                                            if diamonds.iloc[x2, y2] == info[pos]: 
+                                                diamonds.iloc[x2, y2] = pos
                                                 break
                                         else:
                                             break
+                            
+                            diamonds_to_learning = diamonds.copy()
+                            diamonds_to_learning = diamonds_to_learning.dropna(axis = 1)
+                                
 
                             # 1. Dividir o conjunto de dados
-                            diamonds_train, diamonds_test = train_test_split(diamonds, test_size=0.2, random_state=42)
+                            diamonds_train, diamonds_test = train_test_split(diamonds_to_learning, test_size=0.2, random_state=42)
 
                             # 2. Aplicar o KNN para imputar valores faltantes na coluna "price" do conjunto de treinamento
-                            knn_imputer = KNNImputer(n_neighbors=round(math.log(diamonds.shape[0])), metric='nan_euclidean')
+                            knn_imputer = KNNImputer(n_neighbors=round(math.log(diamonds_to_learning.shape[0])), metric='nan_euclidean')
                             
                             # Imputar valores faltantes na coluna "price" do conjunto de teste usando o mesmo imputer
                             diamonds_train_imputed = knn_imputer.fit_transform(diamonds_train)
-                            diamonds_aux = knn_imputer.fit_transform(diamonds)
+                            diamonds_aux = knn_imputer.fit_transform(diamonds_to_learning)
                             diamonds_test_imputed = knn_imputer.transform(diamonds_test)
 
-                            valor_diamonds = pd.DataFrame(diamonds_aux, columns = diamonds.columns)   
+                            valor_diamonds = pd.DataFrame(diamonds_aux, columns = diamonds_to_learning.columns)   
                             
                             # O valor calculado está em dolar, mas queremos transformar isso para real
                             
