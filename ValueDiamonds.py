@@ -200,35 +200,24 @@ if button1 or (button1 == False and button2 == False):
                         st.write("---")
                         if depth == 0: depth = np.nan
                         if table == 0: table = np.nan
-                        st.markdown("### **É IMPORTANTE RESSALTAR QUE O TEMPO DE ESPERA PARA O RESULTADO É DE 60-90 Segundos**")
+                        
+                        
                         if st.button("Prever o preço do diamante!! 💰💲"):
                             st.write("Analizando o diamante para definir seu preço")
-                            st.write("")
                             st.write("")
                             
                             diamonds.loc[diamonds.shape[0]] = {"carat": carat,
                                                                     "cut": cut, "color": color, "clarity": clarity,
                                                                     "depth": depth, "table": table,
                                                                     "x": x, "y": y, "z": z}
-                            
-                            safe_info = []
+                                            
                             for y2 in range(1, 4):
-                                info = list(set(diamonds[diamonds.columns[y2]].dropna()))
-                                safe_info.append(info)
-                                tam = len(info)
-                                
-                                for x2 in range(diamonds.shape[0]):
-                                    for pos in range(tam):
-                                        if not pd.isna(diamonds.iloc[x2, y2]): 
-                                            if diamonds.iloc[x2, y2] == info[pos]: 
-                                                diamonds.iloc[x2, y2] = pos
-                                                break
-                                        else:
-                                            break
+                                diamonds.iloc[:, y2] = pd.factorize(diamonds.iloc[:, y2])[0]
                             
                             diamonds_to_learning = diamonds.copy()
+                            diamonds_to_learning.loc[diamonds_to_learning.shape[0] - 1, "price"] = 1
                             diamonds_to_learning = diamonds_to_learning.dropna(axis = 1)
-                                
+                            diamonds_to_learning.loc[diamonds_to_learning.shape[0] - 1, "price"] = np.nan
 
                             # 1. Dividir o conjunto de dados
                             diamonds_train, diamonds_test = train_test_split(diamonds_to_learning, test_size=0.2, random_state=42)
@@ -241,8 +230,7 @@ if button1 or (button1 == False and button2 == False):
                             diamonds_aux = knn_imputer.fit_transform(diamonds_to_learning)
                             diamonds_test_imputed = knn_imputer.transform(diamonds_test)
 
-                            valor_diamonds = pd.DataFrame(diamonds_aux, columns = diamonds_to_learning.columns)   
-                            
+                            valor_diamonds = pd.DataFrame(diamonds_aux, columns = diamonds_to_learning.columns)
                             # O valor calculado está em dolar, mas queremos transformar isso para real
                             
                             # API da cotação do dolar
@@ -261,7 +249,7 @@ if button1 or (button1 == False and button2 == False):
                             data_dolar_euro = "/".join(data_dolar_euro)
                             
                             st.markdown(f'''
-                            # *O valor do diamante com as características dadas é de:*
+                            ### **O valor do diamante com as características dadas é de:**
                             - Dólar: ${round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"], 2)}
                             - Euro: €{round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"] * float(cotacao_dolar_euro), 2)}
                             - Real: R${round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"] * float(cotacao_dolar_real), 2)}
