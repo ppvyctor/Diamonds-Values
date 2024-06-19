@@ -34,12 +34,12 @@ download1, download2 = st.sidebar.columns(2)
 download1.download_button("Base de dados de Valores Faltantes",
                           pd.read_csv(r"DataBases/Diamonds_values_faltantes.csv").to_csv(index = False).encode("utf-8"),
                           "Diamonds_values_faltantes.csv", mime = "text/csv",
-                          help = 'Essa é a base de dados tem valores faltantes e errados. Usamos essa base de dados na opção "Estudo preciso sobre a precificação de diamantes. 📘", onde tratamos a base de dados.')
+                          help = 'Essa é a base de dados que tem valores faltantes e errados. Usamos essa base de dados na opção "Estudo preciso sobre a precificação de diamantes. 📘", onde tratamos a base de dados e realizamos um estudo usando-a.')
 
 download2.download_button("Baixar base de dados Limpa", 
                           pd.read_csv(r"DataBases/Diamonds_values_faltantes.csv").to_csv(index = False).encode("utf-8"),
                           "Diamonds_limpa.csv", mime = "text/csv",
-                          help = 'Essa é a base de dados que foi tratada, e agora, é usada para as previsões dos diamantes.')
+                          help = 'Essa é a base de dados é a mesma da esquerda, entretanto tal foi tratada, e agora, é usada para as previsões dos diamantes na opção "Descubra o Valor do Seu Diamante: Estime o Preço com Precisão! 💎".')
 
 if button1 or (button1 == False and button2 == False):
     st.title("Descubra o Valor do Seu Diamante: Estime o Preço com Precisão! 💎\n")
@@ -48,7 +48,7 @@ if button1 or (button1 == False and button2 == False):
     diamonds = pd.read_csv(r"DataBases/Diamonds_limpa.csv")
     
     # Definindo a variável cut
-    cut = st.text_input("Digite abaixo o corte do diamante.", help="As faixas de corte são: Fair, Good, Very Good, Premium e Ideal.").lower()
+    cut = st.text_input("Digite abaixo um corte do diamante dentre as opções ao lado: Fair, Good, Very Good, Premium e Ideal.").lower()
     cut = cut.replace(" ", "")# tirando os espaços em branco
     if cut == "verygood": 
         cut = list(cut)
@@ -71,7 +71,7 @@ if button1 or (button1 == False and button2 == False):
         cut = ""
     else:
         # Definindo uma cor ao diamante
-        color = st.text_input("Digite abaixo a color do diamante.", help="As divisões de cores são: D, F, H, E, J, G e I").upper()
+        color = st.text_input("Digite abaixo uma das colores do diamante dentre as opções ao lado:  D, F, H, E, J, G ou I.").upper()
         color = color.replace(" ", "") # tirando os espaços em branco
         
         if color == "":
@@ -83,7 +83,7 @@ if button1 or (button1 == False and button2 == False):
         
         else:
             # Definindo a claridade (pureza) do diamante 
-            clarity = st.text_input("Digite abaixo a claridade (pureza) do diamante.", help = "As faixas de claridade (pureza) são: IF, SI1, VS2, VVS1, I1, VS1, SI2 e VVS2").upper()
+            clarity = st.text_input("Digite abaixo uma claridade(pureza) do diamante dentre as opções ao lado: IF, SI1, VS2, VVS1, I1, VS1, SI2 e VVS2.").upper()
             clarity = clarity.replace(" ", "") # tirando os espaços em branco
             
             if clarity == "":
