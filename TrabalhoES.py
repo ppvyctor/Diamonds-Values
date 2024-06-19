@@ -81,7 +81,7 @@ Entretato, podem existir alguns casos, de se ter um diamante com um quilate muit
     heatmap = px.imshow(correlacao.round(4),
                         x = [x for x in list(diamonds.columns) if not x in ["cut", "clarity", "color"]],
                         y = [x for x in list(diamonds.columns) if not x in ["cut", "clarity", "color"]],
-                        zmin = -1, zmax = 1, color_continuous_scale = "magma", title = "Coeficiênte de Correlação Linear", text_auto=True,
+                        zmin = -1, zmax = 1, color_continuous_scale = "magma", title = "Coeficiênte de Determinação", text_auto=True,
                         width = 700, height = 700)
     st.plotly_chart(heatmap)
     
