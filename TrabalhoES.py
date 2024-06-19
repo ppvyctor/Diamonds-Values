@@ -359,6 +359,8 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     st.markdown("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Agora teremos de descobrir o quilate do diamante, para isso, usaremos a forma 1 de estimar o &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cálculo do diamante:")
     st.latex(r"Quilate = \frac{Massa (mg)}{200}")
     st.markdown("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ficando na fórmula geral:")
+    st.latex(r"Quilate = \frac{Densidade \times Volume}{200}")
+    st.latex(r"\text{OU}")
     st.latex(r"Quilate = \frac{Comprimento \times Largura \times Profundidade \times Densidade}{200}")
 
     st.write("---")
