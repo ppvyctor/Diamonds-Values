@@ -332,7 +332,7 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     plt.show()''')
 
     # Execução do código acima
-    scatterplot = px.scatter(diamonds, x = "carat", y = "price")
+    scatterplot = px.scatter(diamonds, x = "price", y = "carat")
     scatterplot.update_xaxes(title_text = "Quilate")
     scatterplot.update_yaxes(title_text = "Preço")
     st.plotly_chart(scatterplot)
