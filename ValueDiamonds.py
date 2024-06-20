@@ -48,16 +48,16 @@ if button1 or (button1 == False and button2 == False):
     diamonds = pd.read_csv(r"DataBases/Diamonds_limpa.csv")
     
     # Definindo a variável cut
-    cut = st.selectbox("Escolha abaixo um cut(corte) do diamante:", [x for x in list(set(diamonds["cut"].dropna()))].insert(0, "Escolha uma opção"))
+    cut = st.selectbox("Escolha abaixo um cut(corte) do diamante:", tuple([x for x in list(set(diamonds["cut"].dropna()))].insert(0, "Escolha uma opção")))
     
     
     if cut != "Escolha uma opção":
         # Definindo uma cor ao diamante
-        color = st.selectbox("Escolha abaixo a color(cor) do diamante:", [x for x in list(set(diamonds["color"].dropna()))].insert(0, "Escolha uma opção"))
+        color = st.selectbox("Escolha abaixo a color(cor) do diamante:", tuple([x for x in list(set(diamonds["color"].dropna()))].insert(0, "Escolha uma opção")))
         
         if color != "Escolha uma opção":
             # Definindo a claridade (pureza) do diamante 
-            clarity = st.selectbox("Escolha abaixo a clarity(claridade/pureza) do diamante:", [x for x in list(set(diamonds["clarity"].dropna()))].insert(0, "Escolha uma opção"))
+            clarity = st.selectbox("Escolha abaixo a clarity(claridade/pureza) do diamante:", tuple([x for x in list(set(diamonds["clarity"].dropna()))].insert(0, "Escolha uma opção")))
             
             if clarity != "Escolha uma opção":
                 for _ in range(2):
