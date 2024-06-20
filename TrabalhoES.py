@@ -238,7 +238,7 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     plt.show()''')
 
     # Execução do código acima
-    scatterplot = px.scatter(diamonds, x = "price", y = "x")
+    scatterplot = px.scatter(diamonds, x = "x", y = "price")
     scatterplot.update_xaxes(title_text = "Comprimento (mm)")
     scatterplot.update_yaxes(title_text = "Preço")
     st.plotly_chart(scatterplot)
@@ -273,7 +273,7 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     plt.show()''')
 
     # Execução do código acima
-    scatterplot = px.scatter(diamonds, x = "price", y = "y")
+    scatterplot = px.scatter(diamonds, x = "y", y = "price")
     scatterplot.update_xaxes(title_text = "Largura (mm)")
     scatterplot.update_yaxes(title_text = "Preço")
     st.plotly_chart(scatterplot)
@@ -308,7 +308,7 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     plt.show()''')
 
     # Execução do código acima
-    scatterplot = px.scatter(diamonds, x = "price", y = "z")
+    scatterplot = px.scatter(diamonds, x = "z", y = "price")
     scatterplot.update_xaxes(title_text = "Profundidade (mm)")
     scatterplot.update_yaxes(title_text = "Preço")
     st.plotly_chart(scatterplot)
@@ -332,7 +332,7 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     plt.show()''')
 
     # Execução do código acima
-    scatterplot = px.scatter(diamonds, x = "price", y = "carat")
+    scatterplot = px.scatter(diamonds, x = "carat", y = "price")
     scatterplot.update_xaxes(title_text = "Quilate")
     scatterplot.update_yaxes(title_text = "Preço")
     st.plotly_chart(scatterplot)
