@@ -48,52 +48,18 @@ if button1 or (button1 == False and button2 == False):
     diamonds = pd.read_csv(r"DataBases/Diamonds_limpa.csv")
     
     # Definindo a variável cut
-    cut = st.text_input("Digite abaixo um corte do diamante dentre as opções ao lado: Fair, Good, Very Good, Premium e Ideal.").lower()
-    cut = cut.replace(" ", "")# tirando os espaços em branco
-    if cut == "verygood": 
-        cut = list(cut)
-        cut.insert(4, " ")
-        cut[0] = cut[0].upper()
-        cut[5] = cut[5].upper()
-        cut = "".join(cut)
+    cut = st.selectbox("Escolha abaixo um cut(corte) do diamante:", [x for x in list(set(diamonds["cut"].dropna()))].insert(0, "Escolha uma opção"))
     
-    else:
-        if len(list(cut)) > 3:
-            cut = list(cut)
-            cut[0] = cut[0].upper()
-            cut = "".join(cut)
     
-    if cut == "":
-        st.markdown(f'##### **Por favor, digite um corte do diamante!!**')
-
-    elif not cut in list(("Fair", "Good", "Very Good", "Premium", "Ideal")):
-        st.write(f'O corte "{cut}" não está é nenhuma das catergorias ao lado: Fair, Good, Very Good, Premium, Ideal.')
-        cut = ""
-    else:
+    if cut != "Escolha uma opção":
         # Definindo uma cor ao diamante
-        color = st.text_input("Digite abaixo uma das colores do diamante dentre as opções ao lado:  D, F, H, E, J, G ou I.").upper()
-        color = color.replace(" ", "") # tirando os espaços em branco
+        color = st.selectbox("Escolha abaixo a color(cor) do diamante:", [x for x in list(set(diamonds["color"].dropna()))].insert(0, "Escolha uma opção"))
         
-        if color == "":
-            st.markdown(f'##### **Por favor, digite a cor do diamante!!**')
-        
-        elif len(list(color)) != 1 or not color in list(set(diamonds["color"])):
-            st.write(f'A cor do diamante "{color}" não condiz com as opções ao lado: D, F, H, E, J, G, I.')
-            color = ""
-        
-        else:
+        if color != "Escolha uma opção":
             # Definindo a claridade (pureza) do diamante 
-            clarity = st.text_input("Digite abaixo uma claridade(pureza) do diamante dentre as opções ao lado: IF, SI1, VS2, VVS1, I1, VS1, SI2 e VVS2.").upper()
-            clarity = clarity.replace(" ", "") # tirando os espaços em branco
+            clarity = st.selectbox("Escolha abaixo a clarity(claridade/pureza) do diamante:", [x for x in list(set(diamonds["clarity"].dropna()))].insert(0, "Escolha uma opção"))
             
-            if clarity == "":
-                st.markdown(f'##### **Por favor, digite a claridade (pureza) do diamante**')
-
-            elif not clarity in list(set(diamonds["clarity"])): 
-                st.write(f'A claridade "{clarity}" não está é nenhuma das catergorias ao lado: IF, SI1, VS2, VVS1, I1, VS1, SI2, VVS2.')
-                clarity = ""
-
-            else:
+            if clarity != "Escolha uma opção":
                 for _ in range(2):
                     st.write("")
 
