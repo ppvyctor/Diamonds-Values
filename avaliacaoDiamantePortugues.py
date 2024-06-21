@@ -102,110 +102,6 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
 
     st.write("---")
 
-    # Começo de outro bloco de estudo
-    st.markdown("# **Implementação do K-NN**")
-    st.markdown("- OBS: ESSE BLOCO DE IMPLEMENTAÇÃO DO KNN PODERÁ DEMORAR UM POUCO A CARREGAR, DEVIDO AO PROCESSAMENTO DE DADOS!!")
-    st.markdown("Colocando medições iguais a 0 de comprimento, largura e/ou profundidade de um diamante como NaN")
-
-    st.code('''
-    for x in range(diamonds.shape[0]):
-        for y in range(7, diamonds.shape[1]):
-            if diamonds.iloc[x, y] == 0: diamonds.iloc[x, y] = np.nan
-            elif diamonds.iloc[x, y] >= 30: diamonds.iloc[x, y] = np.nan
-    diamonds''')
-
-    # Execução do código acima
-    for x in range(diamonds.shape[0]):
-        for y in range(7, diamonds.shape[1]):
-            if diamonds.iloc[x, y] == 0: diamonds.iloc[x, y] = np.nan
-            elif diamonds.iloc[x, y] >= 30: diamonds.iloc[x, y] = np.nan
-    st.dataframe(diamonds)
-
-    st.markdown("Abaixo está a implementação do K-NN nas colunas numéricas")
-
-    st.code('''
-    #Algumas livros aconselham usar a formula (K = log n) onde n é o numero de linhas da base de dados.
-    #Para assim definir a quantidade de K.
-
-    classificacao = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
-    diamonds[["carat", "depth", "table", "price", "x", "y", "z"]] = classificacao.fit_transform(diamonds[["carat", "depth", "table", "price", "x", "y", "z"]])
-
-    #classificacao.fit(X_train, y_train)
-    diamonds''')
-
-    # Execução do código acima
-    classificacao = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
-    diamonds[["carat", "depth", "table", "price", "x", "y", "z"]] = classificacao.fit_transform(diamonds[["carat", "depth", "table", "price", "x", "y", "z"]])
-
-    st.dataframe(diamonds)
-
-    st.markdown("Aplicação do K-NN para colunas categóricas")
-
-    st.code('''
-    #KNN para valores categóricos
-    encoder = OrdinalEncoder()
-    diamonds_encoder = encoder.fit_transform(diamonds)
-
-    knn_imputer = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
-    diamonds_imputer = knn_imputer.fit_transform(diamonds_encoder)
-
-    diamonds_imputer = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
-    diamonds_imputer = encoder.inverse_transform(diamonds_imputer)
-
-    # Substituindo os valores faltantes na base de dados diamonds principal
-    for x in range(diamonds.shape[0]):
-        for y in range(1, 4):
-            if pd.isna(diamonds.iloc[x, y]): diamonds.iloc[x, y] = diamonds_imputer[x][y]
-
-    diamonds''')
-
-    # Execução do código acima
-    encoder = OrdinalEncoder()
-    diamonds_encoder = encoder.fit_transform(diamonds)
-
-    knn_imputer = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
-    diamonds_imputer = knn_imputer.fit_transform(diamonds_encoder)
-
-    diamonds_imputer = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
-    diamonds_imputer = encoder.inverse_transform(diamonds_imputer)
-
-    # Substituindo os valores faltantes na base de dados diamonds principal
-    for x in range(diamonds.shape[0]):
-        for y in range(1, 4):
-            if pd.isna(diamonds.iloc[x, y]): diamonds.iloc[x, y] = diamonds_imputer[x][y]
-
-    st.dataframe(diamonds)
-
-    st.markdown("Abaixo estamos normalizando as colunas numéricas.")
-
-    st.code('''
-    #padronização das colunas numéricas
-    diamonds[["carat", "x", "y", "z"]] = round(diamonds[["carat", "x", "y", "z"]], 2)
-    diamonds[["table", "price"]] = round(diamonds[["table", "price"]])
-    diamonds["depth"] = round(diamonds["depth"], 1)
-
-    diamonds''')
-
-    # Execução do código acima
-    diamonds[["carat", "x", "y", "z"]] = round(diamonds[["carat", "x", "y", "z"]], 2)
-    diamonds[["table", "price"]] = round(diamonds[["table", "price"]])
-    diamonds["depth"] = round(diamonds["depth"], 1)
-
-    st.dataframe(diamonds)
-
-    st.markdown("Salvando a base de dados já limpa e sem valores faltantes")
-    st.code(r'''
-    path = r"DataBases\Diamonds_limpa.csv"
-    try:
-        pd.read_csv(f"{path}")
-        print(f"Já existe esse dataframe no diretório: {path}")
-    except FileNotFoundError:
-        diamonds.to_csv(fr"{path}", index = False)
-        print(f"Base de dados limpa adicionada ao diretório:\n\t\t  {path}\n\t\t  com sucesso!!"")
-    ''')
-
-    st.write("---")
-
     # Começo de outra parte do estudo jupyter
     st.markdown("# Análise da relação de preço das colunas numéricas")
     st.markdown('''
@@ -513,3 +409,107 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     st.dataframe(clarity_carat)
     
     st.markdown("Com base nas tabelas acima, podemos perceber que os diamantes são melhor caracterizados quando agrupamos usando suas características por quilate. Utilizando um algoritmo de agrupamento KNN para estimar o valor dos diamantes, os parâmetros categóricos como cor, claridade (pureza) e corte, juntamente com o quilate, podem ser características básicas para estimar o preço dos diamantes com as mínimas classificações possíveis de um diamante.")
+    
+    
+    # Implementação do KNN
+    
+    st.markdown("# **Implementação do K-NN**")
+    st.markdown("- OBS: ESSE BLOCO DE IMPLEMENTAÇÃO DO KNN PODERÁ DEMORAR UM POUCO A CARREGAR, DEVIDO AO PROCESSAMENTO DE DADOS!!")
+    st.markdown("Colocando medições iguais a 0 de comprimento, largura e/ou profundidade de um diamante como NaN")
+
+    st.code('''
+    for x in range(diamonds.shape[0]):
+        for y in range(7, diamonds.shape[1]):
+            if diamonds.iloc[x, y] == 0: diamonds.iloc[x, y] = np.nan
+            elif diamonds.iloc[x, y] >= 30: diamonds.iloc[x, y] = np.nan
+    diamonds''')
+
+    # Execução do código acima
+    for x in range(diamonds.shape[0]):
+        for y in range(7, diamonds.shape[1]):
+            if diamonds.iloc[x, y] == 0: diamonds.iloc[x, y] = np.nan
+            elif diamonds.iloc[x, y] >= 30: diamonds.iloc[x, y] = np.nan
+    st.dataframe(diamonds)
+
+    st.markdown("Abaixo está a implementação do K-NN nas colunas numéricas")
+
+    st.code('''
+    #Algumas livros aconselham usar a formula (K = log n) onde n é o numero de linhas da base de dados.
+    #Para assim definir a quantidade de K.
+
+    classificacao = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
+    diamonds[["carat", "depth", "table", "price", "x", "y", "z"]] = classificacao.fit_transform(diamonds[["carat", "depth", "table", "price", "x", "y", "z"]])
+
+    #classificacao.fit(X_train, y_train)
+    diamonds''')
+
+    # Execução do código acima
+    classificacao = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
+    diamonds[["carat", "depth", "table", "price", "x", "y", "z"]] = classificacao.fit_transform(diamonds[["carat", "depth", "table", "price", "x", "y", "z"]])
+
+    st.dataframe(diamonds)
+
+    st.markdown("Aplicação do K-NN para colunas categóricas")
+
+    st.code('''
+    #KNN para valores categóricos
+    encoder = OrdinalEncoder()
+    diamonds_encoder = encoder.fit_transform(diamonds)
+
+    knn_imputer = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
+    diamonds_imputer = knn_imputer.fit_transform(diamonds_encoder)
+
+    diamonds_imputer = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
+    diamonds_imputer = encoder.inverse_transform(diamonds_imputer)
+
+    # Substituindo os valores faltantes na base de dados diamonds principal
+    for x in range(diamonds.shape[0]):
+        for y in range(1, 4):
+            if pd.isna(diamonds.iloc[x, y]): diamonds.iloc[x, y] = diamonds_imputer[x][y]
+
+    diamonds''')
+
+    # Execução do código acima
+    encoder = OrdinalEncoder()
+    diamonds_encoder = encoder.fit_transform(diamonds)
+
+    knn_imputer = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
+    diamonds_imputer = knn_imputer.fit_transform(diamonds_encoder)
+
+    diamonds_imputer = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
+    diamonds_imputer = encoder.inverse_transform(diamonds_imputer)
+
+    # Substituindo os valores faltantes na base de dados diamonds principal
+    for x in range(diamonds.shape[0]):
+        for y in range(1, 4):
+            if pd.isna(diamonds.iloc[x, y]): diamonds.iloc[x, y] = diamonds_imputer[x][y]
+
+    st.dataframe(diamonds)
+
+    st.markdown("Abaixo estamos padronizando as colunas numéricas.")
+
+    st.code('''
+    #padronização das colunas numéricas
+    diamonds[["carat", "x", "y", "z"]] = round(diamonds[["carat", "x", "y", "z"]], 2)
+    diamonds[["table", "price"]] = round(diamonds[["table", "price"]])
+    diamonds["depth"] = round(diamonds["depth"], 1)
+
+    diamonds''')
+
+    # Execução do código acima
+    diamonds[["carat", "x", "y", "z"]] = round(diamonds[["carat", "x", "y", "z"]], 2)
+    diamonds[["table", "price"]] = round(diamonds[["table", "price"]])
+    diamonds["depth"] = round(diamonds["depth"], 1)
+
+    st.dataframe(diamonds)
+
+    st.markdown("Salvando a base de dados já limpa e sem valores faltantes")
+    st.code(r'''
+    path = r"DataBases\Diamonds_limpa.csv"
+    try:
+        pd.read_csv(f"{path}")
+        print(f"Já existe esse dataframe no diretório: {path}")
+    except FileNotFoundError:
+        diamonds.to_csv(fr"{path}", index = False)
+        print(f"Base de dados limpa adicionada ao diretório:\n\t\t  {path}\n\t\t  com sucesso!!"")
+    ''')
