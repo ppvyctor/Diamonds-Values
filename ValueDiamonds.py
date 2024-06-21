@@ -5,7 +5,7 @@ import math
 import requests
 from sklearn.model_selection import train_test_split
 from sklearn.impute import KNNImputer
-from TrabalhoES import cadernoJupyter
+from avaliacaoDiamantePortugues import cadernoJupyter
 
 densidade = 0.0
 volume = 0
