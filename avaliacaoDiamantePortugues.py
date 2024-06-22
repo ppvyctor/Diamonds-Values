@@ -9,6 +9,40 @@ from sklearn.preprocessing import OrdinalEncoder
 from sklearn.impute import KNNImputer
 
 def cadernoJupyter():
+    # Data Analyses da base do trabalho
+    st.markdown('''**Curso:** Storytelling para Ciência de Dados e Inteligência Artificial 
+
+**Universidade:** Pontifícia Universidade Católica de São Paulo 
+
+**Ano:** 2024 
+
+**Autores:**
+
+- Fabiana Campanari
+- Gabriel Melo
+- Pedro Vyctor Carvalho de Almeida''')
+    
+    st.markdown('''# Características príncipais para o entendimento do estudo
+- **Carat:** É o quilate do diamante.
+- **Cut:** É o tipo de corte do diamante.
+- **Color:** É a cor do diamante.
+- **Clarity:** É a pureza/claridade do diamante.
+- **Price:** Preço do diamante.
+- **Depth:** É a porcentagem total da profundidade do diamante.
+- **Table:** Largura da parte superior do diamante em relação ao ponto mais largo.
+- **x:** Comprimento do diamante.
+- **y:** Largura do diamante.
+- **z:** Profundidade do diamante.''')
+    
+    st.markdown('''# Introdução''')
+    st.markdown('''&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O propósito deste projeto é criar um site que defina o preço de um diamante com base em suas características: carat (quilate), cut (corte), color (cor), clarity (claridade), price (preço), depth (profundidade), table (tabela), x (comprimento), y (largura) e z (profundidade). Entretanto, em casos extremos onde é necessário fazer uma estimativa rápida do valor de um diamante, não é viável perder tempo definindo todas essas características. Por isso, é necessário realizar um estudo da base de dados para determinar quais são as características mínimas necessárias para estimar o preço de um diamante de forma precisa.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para implementar o projeto, é essencial avaliar como cada característica do diamante influencia seu preço. Isso requer descobrir como a variabilidade de uma característica pode afetar a variabilidade do preço. Portanto, o uso de estratégias estatísticas será crucial para responder a essas questões e garantir a precisão das estimativas de valor dos diamantes.''')
+    
+    
+    st.write("---")
+    
+    
     # primeira parte do estudo jupyter
     st.markdown("## **Importação das bibliotecas e carregamento do Dataframe**")
     st.code('''
@@ -264,10 +298,12 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     # Iniciando outro bloco de estudos
     st.markdown("# **Relação de preço com as colunas categóricas**")
     
-    st.code("diamonds.describe()")
-    diamonds.describe()
-    
     description = diamonds.describe()
+    
+    st.code("diamonds.describe()")
+    description
+    
+    
     price = [f"until ${description.iloc[4, 3]}", 
         f"until ${description.iloc[5, 3]}",
         f"until ${description.iloc[6, 3]}",
@@ -396,11 +432,15 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     st.code("cut_carat")
     st.dataframe(cut_carat)
     
+    st.markdown("Ao analisarmos os gráficos acima, podemos identificar quais cortes tendem a ter maiores pesos em quilates e preços, e quais cortes tendem a ter menores pesos em quilates e preços. Observamos que o corte influencia mais o peso em quilates do que o preço. No entanto, o corte pode nos auxiliar na determinação do intervalo de valores em que o diamante se enquadra. Uma vez definido o quilate, torna-se mais claro determinar um intervalo de preços para o diamante, permitindo assim uma estimativa mais precisa do seu valor.")
+    
     st.code("color")
     st.dataframe(color)
     
     st.code("color_carat")
     st.dataframe(color_carat)
+    
+    st.markdown("Diferentemente dos gráficos de corte (cut), podemos notar uma separação mais clara nos intervalos de valores ao analisar as cores dos diamantes. Isso nos permite observar com maior precisão quais cores têm uma tendência maior de apresentar quilates elevados e quais tendem a ter quilates mais baixos. Também conseguimos identificar quais cores de diamantes estão associadas a preços mais altos e quais tendem a ter valores mais baixos. Assim como o corte, a cor pode ser utilizada para estimar o preço do diamante, pois oferece uma indicação mais clara das tendências de preço e quilate.")
     
     st.code("clarity")
     st.dataframe(clarity)
@@ -408,8 +448,10 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     st.code("clarity_carat")
     st.dataframe(clarity_carat)
     
-    st.markdown("Com base nas tabelas acima, podemos perceber que os diamantes são melhor caracterizados quando agrupamos usando suas características por quilate. Utilizando um algoritmo de agrupamento KNN para estimar o valor dos diamantes, os parâmetros categóricos como cor, claridade (pureza) e corte, juntamente com o quilate, podem ser características básicas para estimar o preço dos diamantes com as mínimas classificações possíveis de um diamante.")
+    st.markdown("Assim como vimos em cut(corte) e color(cor), a clarity(claridade) também é uma boa característica para poder descobrir o price(preço) do diamante, já que assim como as outras características, a mesma tem uma precisão maior ao definir um valor para carat(quilate) do que para o preço do diamante. Também conseguimos identificar quais claridades do diamantes estão associadas a preços mais altos e quais tendem a ter valores mais baixos. Assim como o corte, a cor pode ser utilizada para estimar o preço do diamante, pois oferece uma indicação mais clara das tendências de preço e quilate.")
+    st.markdown("Contudo, podemos afirmar que as colunas categóricas da base de dados são essenciais para estimar o valor do diamante. Elas fornecem informações cruciais que permitem uma estimativa do preço da joia, auxiliando na determinação do valor do diamante. Portanto, essas colunas devem ser consideradas variáveis obrigatórias para o usuário ao realizar essa análise.")
     
+    st.write("---")
     
     # Implementação do KNN
     
@@ -513,3 +555,6 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
         diamonds.to_csv(fr"{path}", index = False)
         print(f"Base de dados limpa adicionada ao diretório:\n\t\t  {path}\n\t\t  com sucesso!!"")
     ''')
+    
+    st.markdown('Por fim, tentamos salvar a base de dados sem nenhum valor faltante ou incorreto na pasta "Databases". Se conseguirmos, isso indica que a base de dados não estava previamente salva. Caso contrário, a base de dados já estava salva.')
+    st.markdown('Por fim, já podemos pegar a base de dados limpa, e usa-la para prever os valores dos diamantes.')    
