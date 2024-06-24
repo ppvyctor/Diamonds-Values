@@ -185,24 +185,19 @@ if button1 or (button1 == False and button2 == False):
                                             
                             for y2 in range(1, 4):
                                 diamonds.iloc[:, y2] = pd.factorize(diamonds.iloc[:, y2])[0]
-                            
-                            diamonds_to_learning = diamonds.copy()
-                            diamonds_to_learning.loc[diamonds_to_learning.shape[0] - 1, "price"] = 1
-                            diamonds_to_learning = diamonds_to_learning.dropna(axis = 1)
-                            diamonds_to_learning.loc[diamonds_to_learning.shape[0] - 1, "price"] = np.nan
 
                             # 1. Dividir o conjunto de dados
-                            diamonds_train, diamonds_test = train_test_split(diamonds_to_learning, test_size=0.2, random_state=42)
+                            diamonds_train, diamonds_test = train_test_split(diamonds, test_size=0.2, random_state=42)
 
                             # 2. Aplicar o KNN para imputar valores faltantes na coluna "price" do conjunto de treinamento
-                            knn_imputer = KNNImputer(n_neighbors=round(math.log(diamonds_to_learning.shape[0])), metric='nan_euclidean')
+                            knn_imputer = KNNImputer(n_neighbors=round(math.log(diamonds.shape[0])), metric='nan_euclidean')
                             
                             # Imputar valores faltantes na coluna "price" do conjunto de teste usando o mesmo imputer
                             diamonds_train_imputed = knn_imputer.fit_transform(diamonds_train)
-                            diamonds_aux = knn_imputer.fit_transform(diamonds_to_learning)
+                            diamonds_aux = knn_imputer.fit_transform(diamonds)
                             diamonds_test_imputed = knn_imputer.transform(diamonds_test)
 
-                            valor_diamonds = pd.DataFrame(diamonds_aux, columns = diamonds_to_learning.columns)
+                            valor_diamonds = pd.DataFrame(diamonds_aux, columns = diamonds.columns)
                             # O valor calculado está em dolar, mas queremos transformar isso para real
                             
                             # API da cotação do dolar
@@ -236,7 +231,7 @@ if button1 or (button1 == False and button2 == False):
                                 - Hora: {cotacao["USDBRL"]["create_date"].split(" ")[1]}''')
                             
                             with right:
-                                st.markdown(f"##### **Cotação do Dolar-Euro: {cotacao_dolar_euro}**")
+                                st.markdown(f"##### **Cotação do Dolar-Euro:**")
                                 st.markdown(f'''
                                 - Cotação: € {cotacao_dolar_euro}
                                 - Data: {data_dolar_euro}

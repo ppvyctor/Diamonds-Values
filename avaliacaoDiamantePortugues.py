@@ -455,7 +455,7 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     
     # Implementação do KNN
     
-    st.markdown("# **Implementação do K-NN**")
+    st.markdown("# **Implementação do K-NN (K-Nearest Neighbors)**")
     st.markdown("- OBS: ESSE BLOCO DE IMPLEMENTAÇÃO DO KNN PODERÁ DEMORAR UM POUCO A CARREGAR, DEVIDO AO PROCESSAMENTO DE DADOS!!")
     st.markdown("Colocando medições iguais a 0 de comprimento, largura e/ou profundidade de um diamante como NaN")
 
@@ -472,29 +472,13 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
             if diamonds.iloc[x, y] == 0: diamonds.iloc[x, y] = np.nan
             elif diamonds.iloc[x, y] >= 30: diamonds.iloc[x, y] = np.nan
     st.dataframe(diamonds)
-
-    st.markdown("Abaixo está a implementação do K-NN nas colunas numéricas")
-
-    st.code('''
-    #Algumas livros aconselham usar a formula (K = log n) onde n é o numero de linhas da base de dados.
-    #Para assim definir a quantidade de K.
-
-    classificacao = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
-    diamonds[["carat", "depth", "table", "price", "x", "y", "z"]] = classificacao.fit_transform(diamonds[["carat", "depth", "table", "price", "x", "y", "z"]])
-
-    #classificacao.fit(X_train, y_train)
-    diamonds''')
-
-    # Execução do código acima
-    classificacao = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
-    diamonds[["carat", "depth", "table", "price", "x", "y", "z"]] = classificacao.fit_transform(diamonds[["carat", "depth", "table", "price", "x", "y", "z"]])
-
-    st.dataframe(diamonds)
-
-    st.markdown("Aplicação do K-NN para colunas categóricas")
+    
+    st.markdown("Para calcular a distância entre diamantes com valores faltantes e aqueles sem valores faltantes, visando estimar o preço, utilizaremos a distância euclidiana, dada pela fórmula abaixo:")
+    st.latex(r"d(A,B)=\sqrt{\sum_{i=1}^{n} (A_i - B_i)^2}")
+    st.markdown('''- A é o diamante que queremos prever o valor.''')
+    st.markdown("- B é o diamante que estamos calculando a distância.")
 
     st.code('''
-    #KNN para valores categóricos
     encoder = OrdinalEncoder()
     diamonds_encoder = encoder.fit_transform(diamonds)
 
@@ -503,11 +487,7 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
 
     diamonds_imputer = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
     diamonds_imputer = encoder.inverse_transform(diamonds_imputer)
-
-    # Substituindo os valores faltantes na base de dados diamonds principal
-    for x in range(diamonds.shape[0]):
-        for y in range(1, 4):
-            if pd.isna(diamonds.iloc[x, y]): diamonds.iloc[x, y] = diamonds_imputer[x][y]
+    diamonds = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
 
     diamonds''')
 
@@ -520,28 +500,7 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
 
     diamonds_imputer = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
     diamonds_imputer = encoder.inverse_transform(diamonds_imputer)
-
-    # Substituindo os valores faltantes na base de dados diamonds principal
-    for x in range(diamonds.shape[0]):
-        for y in range(1, 4):
-            if pd.isna(diamonds.iloc[x, y]): diamonds.iloc[x, y] = diamonds_imputer[x][y]
-
-    st.dataframe(diamonds)
-
-    st.markdown("Abaixo estamos padronizando as colunas numéricas.")
-
-    st.code('''
-    #padronização das colunas numéricas
-    diamonds[["carat", "x", "y", "z"]] = round(diamonds[["carat", "x", "y", "z"]], 2)
-    diamonds[["table", "price"]] = round(diamonds[["table", "price"]])
-    diamonds["depth"] = round(diamonds["depth"], 1)
-
-    diamonds''')
-
-    # Execução do código acima
-    diamonds[["carat", "x", "y", "z"]] = round(diamonds[["carat", "x", "y", "z"]], 2)
-    diamonds[["table", "price"]] = round(diamonds[["table", "price"]])
-    diamonds["depth"] = round(diamonds["depth"], 1)
+    diamonds = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
 
     st.dataframe(diamonds)
 
