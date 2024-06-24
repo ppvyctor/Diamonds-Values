@@ -4,4 +4,4 @@ The repository contains a website designed to evaluate the price of a diamond ba
 [Discover the price of the your diamonds](https://diamondsvalues.streamlit.app)
 
 
-![Qr code](qrcode/Site.png)
+![Qr code para teste](qrcode/Site.png)
