@@ -20,7 +20,10 @@ def cadernoJupyter():
 
 - Fabiana Campanari
 - Gabriel Melo
-- Pedro Vyctor Carvalho de Almeida''')
+- Pedro Vyctor Carvalho de Almeida
+- Luan Augusto dos Santos Fabiano
+- Pedro Gallego Barenco
+- José Augusto de Souza Oliveira''')
     
     st.markdown('''# Características príncipais para o entendimento do estudo
 - **Carat:** É o quilate do diamante.
