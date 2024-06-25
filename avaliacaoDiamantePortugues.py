@@ -9,22 +9,6 @@ from sklearn.preprocessing import OrdinalEncoder
 from sklearn.impute import KNNImputer
 
 def cadernoJupyter():
-    # Data Analyses da base do trabalho
-    st.markdown('''**Curso:** Storytelling para Ciência de Dados e Inteligência Artificial 
-
-**Universidade:** Pontifícia Universidade Católica de São Paulo 
-
-**Ano:** 2024 
-
-**Autores:**
-
-- Fabiana Campanari
-- Gabriel Melo
-- Pedro Vyctor Carvalho de Almeida
-- Luan Augusto dos Santos Fabiano
-- Pedro Gallego Barenco
-- José Augusto de Souza Oliveira''')
-    
     st.markdown('''# Características príncipais para o entendimento do estudo
 - **Carat:** É o quilate do diamante.
 - **Cut:** É o tipo de corte do diamante.
