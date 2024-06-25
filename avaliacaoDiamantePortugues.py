@@ -42,6 +42,20 @@ def cadernoJupyter():
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para implementar o projeto, é essencial avaliar como cada característica do diamante influencia seu preço. Isso requer descobrir como a variabilidade de uma característica pode afetar a variabilidade do preço. Portanto, o uso de estratégias estatísticas será crucial para responder a essas questões e garantir a precisão das estimativas de valor dos diamantes.''')
     
+    st.markdown("# Base de dados usadas no estudo:")
+
+    download1, download2 = st.columns(2)
+
+    download1.download_button("Base de dados de Valores Faltantes",
+                            pd.read_csv(r"DataBases/Diamonds_values_faltantes.csv").to_csv(index = False).encode("utf-8"),
+                            "Diamonds_values_faltantes.csv", mime = "text/csv",
+                            help = 'Essa é a base de dados que tem valores faltantes e errados. Usamos essa base de dados na opção "Estudo preciso sobre a precificação de diamantes. 📘", onde tratamos a base de dados e realizamos um estudo usando-a.')
+
+    download2.download_button("Baixar base de dados Limpa", 
+                            pd.read_csv(r"DataBases/Diamonds_values_faltantes.csv").to_csv(index = False).encode("utf-8"),
+                            "Diamonds_limpa.csv", mime = "text/csv",
+                            help = 'Essa é a base de dados é a mesma da esquerda, entretanto tal foi tratada, e agora, é usada para as previsões dos diamantes na opção "Descubra o Valor do Seu Diamante: Estime o Preço com Precisão! 💎".')
+
     
     st.write("---")
     
@@ -75,7 +89,7 @@ def cadernoJupyter():
     st.markdown("Abaixo está a quantidade de valores faltantes por coluna")
 
     st.code('''
-                 = {}
+            counter = {}
             for x in range(diamonds.shape[1]):
                 column_name = diamonds.columns[x]
                 counter[column_name] = diamonds.shape[0] - len(diamonds[column_name].dropna())
