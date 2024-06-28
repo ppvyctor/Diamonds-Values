@@ -16,7 +16,6 @@ ATTENTION: For know more about the study to database diamonds, click in above li
 - [Pedro Vyctor Carvalho](https://github.com/ppvyctor)
 
 # Video
-below 
 [you will see a case when we need a program to evaluate a diamond](https://www.youtube.com/watch?v=oB5LNST4fp4)
 
 # Bibliography
