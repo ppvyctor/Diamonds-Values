@@ -15,4 +15,5 @@ ATTENTION: For know more about the study to database diamonds, click in above li
 - [Matheus Cezario](https://github.com/mathhhhh04)
 - [Pedro Vyctor Carvalho](https://github.com/ppvyctor)
 
-# 
+# Bibliography
+-  AGRAWAL, Shivam. Diamonds. Kaggle, Udaipur, 28 de junho de 2017. Disponível em: [https://www.kaggle.com/datasets/shivam2503/diamonds]. Acesso em: 28 de junho de 2024.
