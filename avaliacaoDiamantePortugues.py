@@ -7,25 +7,12 @@ import math
 import numpy as np
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.impute import KNNImputer
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.metrics import r2_score
+
 
 def cadernoJupyter():
-    st.markdown('''# Características príncipais para o entendimento do estudo
-- **Carat:** É o quilate do diamante.
-- **Cut:** É o tipo de corte do diamante.
-- **Color:** É a cor do diamante.
-- **Clarity:** É a pureza/claridade do diamante.
-- **Price:** Preço do diamante.
-- **Depth:** É a porcentagem total da profundidade do diamante.
-- **Table:** Largura da parte superior do diamante em relação ao ponto mais largo.
-- **x:** Comprimento do diamante.
-- **y:** Largura do diamante.
-- **z:** Profundidade do diamante.''')
-    
-    st.markdown('''# Introdução''')
-    st.markdown('''&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O propósito deste projeto é criar um site que defina o preço de um diamante com base em suas características: carat (quilate), cut (corte), color (cor), clarity (claridade), price (preço), depth (profundidade), table (tabela), x (comprimento), y (largura) e z (profundidade). Entretanto, em casos extremos onde é necessário fazer uma estimativa rápida do valor de um diamante, não é viável perder tempo definindo todas essas características. Por isso, é necessário realizar um estudo da base de dados para determinar quais são as características mínimas necessárias para estimar o preço de um diamante de forma precisa.
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Para implementar o projeto, é essencial avaliar como cada característica do diamante influencia seu preço. Isso requer descobrir como a variabilidade de uma característica pode afetar a variabilidade do preço. Portanto, o uso de estratégias estatísticas será crucial para responder a essas questões e garantir a precisão das estimativas de valor dos diamantes.''')
-    
     st.markdown("# Base de dados usadas no estudo:")
 
     download1, download2 = st.columns(2)
@@ -39,13 +26,63 @@ def cadernoJupyter():
                             pd.read_csv(r"DataBases/Diamonds_values_faltantes.csv").to_csv(index = False).encode("utf-8"),
                             "Diamonds_limpa.csv", mime = "text/csv",
                             help = 'Essa é a base de dados é a mesma da esquerda, entretanto tal foi tratada, e agora, é usada para as previsões dos diamantes na opção "Descubra o Valor do Seu Diamante: Estime o Preço com Precisão! 💎".')
+    
+    
+    st.markdown('''# Introdução''')
+    st.markdown('''<div style="text-indent: 30px;">O objetivo deste projeto é criar um site que determine o preço de um diamante com base em suas características: quilate (carat), corte (cut), cor (color), claridade (clarity), preço (price), profundidade (depth), tabela (table), comprimento (x), largura (y) e profundidade (z). No entanto, em situações onde é necessário estimar rapidamente o valor de um diamante, não é viável considerar todas essas características. Portanto, é necessário um estudo da base de dados para identificar as características mínimas necessárias para uma estimativa precisa do preço de um diamante.</div>
 
+<div style="text-indent: 30px;">Para realizar este estudo, utilizaremos o modelo de projeto CRISP-DM (Cross-Industry Standard Process for Data Mining). O CRISP-DM possui seis etapas de planejamento do projeto: entendimento do negócio, entendimento dos dados, processamento de dados, modelagem, avaliação e implementação. Todos esses processos serão seguidos durante o estudo da base de dados Diamonds.</div>
+''', unsafe_allow_html=True)
+    
+    
+    st.write("---")
+    
+    st.markdown("# **Etapa 1: Entendimento do negócio**")
+    
+    st.markdown(f'''O primeiro passo do CRISP-DM é o entendimento do negócio, precisamos entender exatamente o que o cliente está precisando que façamos. Para tal, usaremos de 2 estratégias para resolver o problema, sendo a primera a criação de um DER (Diagrama de Entidade e Relacionamento), e a segunda sendo a criação de um processo ágil BDD (Behavior-Driven Development).
+
+1) Para obter uma visão mais clara da base de dados, vamos começar criando um Diagrama de Entidade-Relacionamento como o mostrado abaixo.
+''')
+    
+    st.image("DER.png")
+    
+    st.markdown('''
+2) Usaremos o BDD para a realizar uma criação de cenários do nosso projeto, sendo tal o que está abaixo:
+
+**Cenário 1**: Estimar um preço para o diamante
+
+*COMO* um usuário,
+
+*EU* quero descobrir o valor de um diamante,
+
+*PARA* não ser enganado quando for realizar a venda de meu diamante.
+''')
+    
+    st.write("---")
+    st.markdown("# **Etapa 2: Entendimento dos dados**")
+    
+    st.markdown('''Tendo o entendimento do negócio já estabelecido, agora iremos ir para o segundo passo do CRISP-DM, o Entendimento dos dados. Para esse processo, a base de dados adquirida foi a base de dados Diamonds, tal base de dados foi adquirida na plataforma Kaggle. Essa base de dados foi entreguem em formato CSV, com 10 colunas e 53940 linhas.''')
+    
+    st.markdown('''## Características da base de dados
+- **Carat:** É o quilate do diamante.
+- **Cut:** É o tipo de corte do diamante.
+- **Color:** É a cor do diamante.
+- **Clarity:** É a pureza/claridade do diamante.
+- **Price:** Preço do diamante.
+- **Depth:** É a porcentagem total da profundidade do diamante.
+- **Table:** Largura da parte superior do diamante em relação ao ponto mais largo.
+- **x:** Comprimento do diamante.
+- **y:** Largura do diamante.
+- **z:** Profundidade do diamante.''')
     
     st.write("---")
     
     
     # primeira parte do estudo jupyter
-    st.markdown("## **Importação das bibliotecas e carregamento do Dataframe**")
+    st.markdown("# **Etapa 3: Preparação dos dados**")
+    
+    st.markdown("A seguir, vamos abordar o processo 3 do CRISP-DM: a preparação dos dados. Nesta etapa, importaremos algumas bibliotecas em Python e investigaremos a existência de valores incorretos ou ausentes na base de dados. Caso encontremos valores indesejados ou faltantes, realizaremos o tratamento necessário para garantir que não influenciem negativamente nos resultados das pesquisas do projeto.")
+    
     st.code('''
             import pandas as pd
             import seaborn as sns
@@ -54,22 +91,23 @@ def cadernoJupyter():
             import streamlit as st
             import numpy as np
             from sklearn.preprocessing import OrdinalEncoder
-            from sklearn.impute import KNNImputer''', language="python")
+            from sklearn.impute import KNNImputer
+            from sklearn.model_selection import train_test_split
+            from sklearn.neighbors import KNeighborsRegressor
+            from sklearn.metrics import r2_score''',
+            language="python")
     
     st.code(r'''
             path = r"DataBases\Diamonds_values_faltantes.csv"
             diamonds = pd.read_csv(fr"{path}")
-            diamonds''', language="python")
+            diamonds''',
+            language="python")
 
     # Execução do código acima
     path = r"DataBases/Diamonds_values_faltantes.csv"
     diamonds = pd.read_csv(fr"{path}")
     st.dataframe(diamonds)
     
-    st.write("---")
-
-    # Segundo parte do estudo jupyter
-    st.markdown("# **Visualização de coeficiênte de correlação linear e separação da base de dados, para melhor implementação do KNN.**")
     st.markdown("Abaixo está a quantidade de valores faltantes por coluna")
 
     st.code('''
@@ -89,6 +127,76 @@ def cadernoJupyter():
 
     counter_df = pd.DataFrame(list(counter.items()), columns=['Coluna', 'Quantidade de NaN'])
     st.dataframe(counter_df)
+    
+    st.markdown("## **Preparação dos dados: Tratando a base de dados usando o algorítimo K-NN (K-Nearest Neighbors)**")
+    
+    st.markdown("Colocando medições iguais a 0 de comprimento, largura e/ou profundidade de um diamante como NaN")
+
+    st.code('''
+    for x in range(diamonds.shape[0]):
+        for y in range(7, diamonds.shape[1]):
+            if diamonds.iloc[x, y] == 0: diamonds.iloc[x, y] = np.nan
+            elif diamonds.iloc[x, y] >= 30: diamonds.iloc[x, y] = np.nan
+    diamonds''')
+
+    # Execução do código acima
+    for x in range(diamonds.shape[0]):
+        for y in range(7, diamonds.shape[1]):
+            if diamonds.iloc[x, y] == 0: diamonds.iloc[x, y] = np.nan
+            elif diamonds.iloc[x, y] >= 30: diamonds.iloc[x, y] = np.nan
+    st.dataframe(diamonds)
+    
+    st.markdown("Para calcular a distância entre diamantes com valores faltantes e aqueles sem valores faltantes, visando estimar o preço, utilizaremos a distância euclidiana, dada pela fórmula abaixo:")
+    st.latex(r"d(A,B)=\sqrt{\sum_{i=1}^{n} (A_i - B_i)^2}")
+    st.markdown('''- A é o diamante que queremos prever o valor.''')
+    st.markdown("- B é o diamante que estamos calculando a distância.")
+
+    st.markdown("OBS: Este bloco de implementação do KNN pode demorar cerca de 1 minuto para carregar devido ao processamento intensivo de dados!!!".upper())
+
+    st.code('''
+    encoder = OrdinalEncoder()
+    diamonds_encoder = encoder.fit_transform(diamonds)
+
+    knn_imputer = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
+    diamonds_imputer = knn_imputer.fit_transform(diamonds_encoder)
+
+    diamonds_imputer = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
+    diamonds_imputer = encoder.inverse_transform(diamonds_imputer)
+    diamonds = pd.DataFrame(diamonds_imputer.tolist(), columns = diamonds.columns)
+
+    diamonds''')
+
+    # Execução do código acima
+    encoder = OrdinalEncoder()
+    diamonds_encoder = encoder.fit_transform(diamonds)
+
+    knn_imputer = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
+    diamonds_imputer = knn_imputer.fit_transform(diamonds_encoder)
+
+    diamonds_imputer = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
+    diamonds_imputer = encoder.inverse_transform(diamonds_imputer)
+    diamonds = pd.DataFrame(diamonds_imputer.tolist(), columns = diamonds.columns)
+
+    st.dataframe(diamonds)
+
+    st.markdown("Salvando a base de dados já limpa e sem valores faltantes")
+    st.code(r'''
+    path = r"DataBases\Diamonds_limpa.csv"
+    try:
+        pd.read_csv(f"{path}")
+        print(f"Já existe esse dataframe no diretório: {path}")
+    except FileNotFoundError:
+        diamonds.to_csv(fr"{path}", index = False)
+        print(f"Base de dados limpa adicionada ao diretório:\n\t\t  {path}\n\t\t  com sucesso!!"")
+    ''')
+    
+    st.markdown('Por fim, tentamos salvar a base de dados sem nenhum valor faltante ou incorreto na pasta "Databases". Se conseguirmos, isso indica que a base de dados não estava previamente salva. Caso contrário, a base de dados já estava salva.')
+    
+    
+    st.write("---")
+
+    # Segundo parte do estudo jupyter
+    st.markdown("# **Etapa 4: Modelagem**")
 
     st.code('''
     plt.figure(figsize = (8, 6))
@@ -135,10 +243,8 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
 
     - Clarity tem 8 tipos de classificação SI2, SI1, VS1, VS2, VVS2, VVS1, I1 e IF''')
 
-    st.write("---")
-
     # Começo de outra parte do estudo jupyter
-    st.markdown("# Análise da relação de preço das colunas numéricas")
+    st.markdown("## Análise da relação de preço das colunas numéricas")
     st.markdown('''
     **INFORMAÇÕES IMPORTANTES:**
     - 1 Quilate equivale a 200mg
@@ -293,16 +399,14 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     st.latex(r"Quilate = \frac{Densidade \times Volume}{200}")
     st.latex(r"\text{OU}")
     st.latex(r"Quilate = \frac{Comprimento \times Largura \times Profundidade \times Densidade}{200}")
-
-    st.write("---")
     
     # Iniciando outro bloco de estudos
-    st.markdown("# **Relação de preço com as colunas categóricas**")
+    st.markdown("## **Relação de preço com as colunas categóricas**")
     
     description = diamonds.describe()
     
     st.code("diamonds.describe()")
-    description
+    st.dataframe(description)
     
     
     price = [f"until ${description.iloc[4, 3]}", 
@@ -454,67 +558,58 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     
     st.write("---")
     
-    # Implementação do KNN
+    st.markdown("# Etapa 5: Avaliação")
     
-    st.markdown("# **Implementação do K-NN (K-Nearest Neighbors)**")
-    st.markdown("- OBS: ESSE BLOCO DE IMPLEMENTAÇÃO DO KNN PODERÁ DEMORAR UM POUCO A CARREGAR, DEVIDO AO PROCESSAMENTO DE DADOS!!")
-    st.markdown("Colocando medições iguais a 0 de comprimento, largura e/ou profundidade de um diamante como NaN")
-
-    st.code('''
-    for x in range(diamonds.shape[0]):
-        for y in range(7, diamonds.shape[1]):
-            if diamonds.iloc[x, y] == 0: diamonds.iloc[x, y] = np.nan
-            elif diamonds.iloc[x, y] >= 30: diamonds.iloc[x, y] = np.nan
-    diamonds''')
-
-    # Execução do código acima
-    for x in range(diamonds.shape[0]):
-        for y in range(7, diamonds.shape[1]):
-            if diamonds.iloc[x, y] == 0: diamonds.iloc[x, y] = np.nan
-            elif diamonds.iloc[x, y] >= 30: diamonds.iloc[x, y] = np.nan
-    st.dataframe(diamonds)
+    st.markdown("Na penúltima etapa do CRISP-DM, é crucial avaliar o desempenho do modelo de previsão adotado. Nesse contexto, utilizaremos a biblioteca scikit-learn para empregar o coeficiente de determinação (R²). Esse coeficiente nos auxilia na avaliação da precisão do modelo tanto para substituir valores faltantes na base de dados quanto para estimar o valor de diamantes fornecidos pelos usuários.")
     
-    st.markdown("Para calcular a distância entre diamantes com valores faltantes e aqueles sem valores faltantes, visando estimar o preço, utilizaremos a distância euclidiana, dada pela fórmula abaixo:")
-    st.latex(r"d(A,B)=\sqrt{\sum_{i=1}^{n} (A_i - B_i)^2}")
-    st.markdown('''- A é o diamante que queremos prever o valor.''')
-    st.markdown("- B é o diamante que estamos calculando a distância.")
-
-    st.code('''
+    st.code('''# Transformando as variáveis categóricas em numéricas
     encoder = OrdinalEncoder()
-    diamonds_encoder = encoder.fit_transform(diamonds)
+    diamonds_encoder = encoder.fit_transform(diamonds.drop(columns=['price']))
 
-    knn_imputer = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
-    diamonds_imputer = knn_imputer.fit_transform(diamonds_encoder)
+    # Colocando essas alterações na base de dados
+    X = pd.DataFrame(diamonds_encoder.tolist(), columns = list(diamonds.columns).remove("price"))
+    y = diamonds['price']
 
-    diamonds_imputer = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
-    diamonds_imputer = encoder.inverse_transform(diamonds_imputer)
-    diamonds = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
+    # Dividir os dados em conjuntos de treinamento e teste
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-    diamonds''')
+    # Criar e treinar o modelo KNN  # valor de K baseado no log do número de observações
+    knn = KNeighborsRegressor(n_neighbors = int(round(math.log(diamonds.shape[0]), 0)))
+    knn.fit(X_train, y_train)
 
-    # Execução do código acima
-    encoder = OrdinalEncoder()
-    diamonds_encoder = encoder.fit_transform(diamonds)
+    # Fazer previsões no conjunto de teste
+    y_pred = knn.predict(X_test)
 
-    knn_imputer = KNNImputer(n_neighbors = round(math.log(diamonds.shape[0])))
-    diamonds_imputer = knn_imputer.fit_transform(diamonds_encoder)
-
-    diamonds_imputer = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
-    diamonds_imputer = encoder.inverse_transform(diamonds_imputer)
-    diamonds = pd.DataFrame(diamonds_imputer, columns = diamonds.columns)
-
-    st.dataframe(diamonds)
-
-    st.markdown("Salvando a base de dados já limpa e sem valores faltantes")
-    st.code(r'''
-    path = r"DataBases\Diamonds_limpa.csv"
-    try:
-        pd.read_csv(f"{path}")
-        print(f"Já existe esse dataframe no diretório: {path}")
-    except FileNotFoundError:
-        diamonds.to_csv(fr"{path}", index = False)
-        print(f"Base de dados limpa adicionada ao diretório:\n\t\t  {path}\n\t\t  com sucesso!!"")
-    ''')
+    # Avaliar o modelo
+    r2 = r2_score(y_test, y_pred)
+    print(f'R² (Coeficiente de Determinação): {r2 * 100:.2f}%')''', language = "python")
     
-    st.markdown('Por fim, tentamos salvar a base de dados sem nenhum valor faltante ou incorreto na pasta "Databases". Se conseguirmos, isso indica que a base de dados não estava previamente salva. Caso contrário, a base de dados já estava salva.')
-    st.markdown('Por fim, já podemos pegar a base de dados limpa, e usa-la para prever os valores dos diamantes.')    
+    # Transformando as variáveis categóricas em numéricas
+    encoder = OrdinalEncoder()
+    diamonds_encoder = encoder.fit_transform(diamonds.drop(columns=['price']))
+
+    # Colocando essas alterações na base de dados
+    X = pd.DataFrame(diamonds_encoder.tolist(), columns = list(diamonds.columns).remove("price"))
+    y = diamonds['price']
+
+    # Dividir os dados em conjuntos de treinamento e teste
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+    # Criar e treinar o modelo KNN  # valor de K baseado no log do número de observações
+    knn = KNeighborsRegressor(n_neighbors = int(round(math.log(diamonds.shape[0]), 0)))
+    knn.fit(X_train, y_train)
+
+    # Fazer previsões no conjunto de teste
+    y_pred = knn.predict(X_test)
+
+    # Avaliar o modelo
+    r2 = r2_score(y_test, y_pred)
+    st.write(f'R² (Coeficiente de Determinação): {r2 * 100:.2f}%')
+    
+    st.markdown("Com base no programa acima, podemos concluir que a confiabilidade do algoritmo KNN é de 90,98%. Isso significa que, ao prever o preço de um diamante fornecido pelo usuário, o programa tem uma precisão de 90,98%.")
+
+    st.write("---")
+    
+    st.markdown("# **Etapa 6:**")
+    st.markdown("Por fim, a implementação é a última etapa do CRISP-DM. Nesta fase, colocamos em prática o projeto estudado. Agora que conhecemos o nível de confiabilidade do algoritmo e as variáveis mínimas que são importantes para a estimativa do preço do diamante, podemos implementar nosso estudo no projeto final. Isso significa que podemos utilizar todo o conhecimento e o modelo desenvolvido para prever o preço de um diamante de forma eficaz e precisa. Por isso o passo final é realizar o programa que prever o valor do diamante.")
+    
