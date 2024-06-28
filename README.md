@@ -15,5 +15,11 @@ ATTENTION: For know more about the study to database diamonds, click in above li
 - [Matheus Cezario](https://github.com/mathhhhh04)
 - [Pedro Vyctor Carvalho](https://github.com/ppvyctor)
 
+# Video
+below you will go see a case, than when you need of this program.
+![Atividade extensionista ES](https://www.youtube.com/watch?v=oB5LNST4fp4)
+
 # Bibliography
--  AGRAWAL, Shivam. Diamonds. Kaggle, Udaipur, 28 de junho de 2017. Disponível em: [https://www.kaggle.com/datasets/shivam2503/diamonds]. Acesso em: 28 de junho de 2024.
+-  AGRAWAL, Shivam. Diamonds. Kaggle, Udaipur, 28 de junho de 2017. Disponível em: [https://www.kaggle.com/datasets/shivam2503/diamonds]. Acesso em: 1 de abril de 2024.
+-  EU AMO DIAMANTES, O que são os pontos de um diamante?. Ponta Grossa. Disponível em: [https://stelladiamonds.com.br/o-que-sao-os-pontos-de-um-diamante/]. Acesso em: 26 de abril de 2024
+-  RUSSELL, Stuart; NORVIG, Peter. Título: Inteligência Artificial - Uma Abordagem Moderna. Quarta edição. Local de publicação: GEN LTC, 11 de agosto de 2022.
