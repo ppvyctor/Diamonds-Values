@@ -16,8 +16,8 @@ ATTENTION: For know more about the study to database diamonds, click in above li
 - [Pedro Vyctor Carvalho](https://github.com/ppvyctor)
 
 # Video
-below you will go see a case, than when you need of this program.
-![[Atividade extensionista ES](https://www.youtube.com/watch?v=oB5LNST4fp4)]
+below 
+[you will see a case when we need a program to evaluate a diamond](https://www.youtube.com/watch?v=oB5LNST4fp4)
 
 # Bibliography
 -  AGRAWAL, Shivam. Diamonds. Kaggle, Udaipur, 28 de junho de 2017. Disponível em: [https://www.kaggle.com/datasets/shivam2503/diamonds]. Acesso em: 1 de abril de 2024.
