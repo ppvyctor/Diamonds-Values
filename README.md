@@ -9,7 +9,7 @@ ATTENTION: For know more about the study to database diamonds, click in above li
 
 # Contributors
 - [André Livingston](https://github.com/devdebdeb)
-- [César Algusto Sibila](https://github.com/Czar210)
+- [César Augusto Sibila](https://github.com/Czar210)
 - [Enzo Takida](https://github.com/enzotakida)
 - [Juan Rio](https://github.com/juanzaodamassa)
 - [Matheus Cezario](https://github.com/mathhhhh04)
