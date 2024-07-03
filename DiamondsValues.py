@@ -25,7 +25,7 @@ def translate(text, to_lang):
     return GoogleTranslator(source='pt', target=to_lang).translate(text)
     
 
-language = st.radio("#### Language", ["Español", "English", "Português"])
+language = st.radio("#### Language", ["English", "Español", "Português"])
 
 if language == "Español":
     language = "es"
