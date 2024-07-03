@@ -267,9 +267,9 @@ if button1 or (button1 == False and button2 == False):
                     
                     left, center, right = st.columns(3)
                     
-                    left.markdown(f"- Dólar: ${round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"], 2)}")
-                    center.markdown(f"- Euro: €{round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"] * float(cotacao_dolar_euro), 2)}")
-                    right.markdown(f"- Real: R${round(valor_diamonds.loc[valor_diamonds.shape[0]-1, "price"] * float(cotacao_dolar_real), 2)}")
+                    left.markdown(f"- Dólar: ${round(valor_diamonds.loc[valor_diamonds.shape[0]-1, 'price'], 2)}")
+                    center.markdown(f"- Euro: €{round(valor_diamonds.loc[valor_diamonds.shape[0]-1, 'price'] * float(cotacao_dolar_euro), 2)}")
+                    right.markdown(f"- Real: R${round(valor_diamonds.loc[valor_diamonds.shape[0]-1, 'price'] * float(cotacao_dolar_real), 2)}")
                     
                     left, right = st.columns(2)
                     
