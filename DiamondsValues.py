@@ -112,7 +112,7 @@ if button1 or (button1 == False and button2 == False):
                             texto[2],
                             texto[3],
                             texto[4],
-                            translate(texto[5], to_lang = language)))
+                            texto[5]))
         
         if option == texto[1]:
             carat = st.number_input(solicitacao_digitacao[0], min_value=0.0, max_value=10.0)
