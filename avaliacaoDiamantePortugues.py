@@ -239,7 +239,7 @@ def cadernoJupyter(language):
 
 Com base nessa análise do heatmap, podemos concluir que quanto maior o carat(quilate), x(comprimento), y(largura) e z(profundidade), maior poderá ser o price(preço) do diamante.
 
-Entretato, podem existir alguns casos, de se ter um diamante com um quilate muito alto porém com um preço baixo, assim como poderá existir diamantes com um quilate baixo mas com um preço alto. Tal, poderá também acontecer com o x(comprimento), y(largura) e z(profundidade), por causa disso nos questionamos o seguinte, quanto que o carat(quilate), x(comprimento), y(largura) e z(profundidade) conseguem determinar o valor do diamante? Para responder isso, precisamos tirar o Coeficiênte de Determinação.''', language))
+Entretato, podem existir alguns casos, de se ter um diamante com um quilate muito alto porém com um preço baixo, assim como poderá existir diamantes com um quilate baixo mas com um preço alto. Tal, poderá também acontecer com o x(comprimento), y(largura) e z(profundidade), por causa disso nos questionamos o seguinte, quanto que o carat(quilate), x(comprimento), y(largura) e z(profundidade) conseguem determinar o valor do diamante? Para responder isso, precisamos tirar o Coeficiênte de Determinação.'''.replace("  ", ""), language))
 
     st.code('''
     plt.figure(figsize = (8, 6))
@@ -274,7 +274,7 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     st.markdown(Translate('''
     **INFORMAÇÕES IMPORTANTES:**
     - 1 Quilate equivale a 200mg
-    - 1 Ponto equivale a 0,01 quilates''', language))
+    - 1 Ponto equivale a 0,01 quilates'''.replace("  ", ""), language))
     st.markdown(Translate("O gráfico abaixo compara a relação do comprimento de um diamante com o carat e com o preço", language))
 
     st.code('''
@@ -403,28 +403,32 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     st.markdown(Translate('''
     Com base nos gráficos apresentados, é evidente que o comprimento, largura e profundidade de um diamante têm uma relação mais confiável com seu peso em quilates do que com seu preço. Portanto, ao determinar o valor de um diamante com o mínimo de medidas necessárias, podemos confiar nos dados de quilates fornecidos. As dimensões físicas, como comprimento, largura e profundidade, oferecem uma indicação mais precisa do peso do diamante do que do seu valor monetário.
 
-    Entretanto, é importante ressaltar que isso não significa que não podemos usar as medidas de comprimento, largura e profundidade para estimar o valor de um diamante. Pelo contrário, quanto mais informações tivermos, mais precisa será a estimativa do preço do diamante. No entanto, se tivermos que escolher o mínimo de informações para estimar o valor de um diamante, podemos afirmar que o quilate é suficiente para essa avaliação.''', language))
+    Entretanto, é importante ressaltar que isso não significa que não podemos usar as medidas de comprimento, largura e profundidade para estimar o valor de um diamante. Pelo contrário, quanto mais informações tivermos, mais precisa será a estimativa do preço do diamante. No entanto, se tivermos que escolher o mínimo de informações para estimar o valor de um diamante, podemos afirmar que o quilate é suficiente para essa avaliação.'''.replace("  ", ""), language))
 
     st.markdown(Translate('''
     #### **Existem 3 formas de solicitar um dado ao usuário para estimar o quilate do diamante:**
-    1) Solicitar a massa do diamante para o cliente, e com isso realizar o cálculo:''', language))
-    st.latex(r"Quilate = \frac{Massa (mg)}{200}")
+    1) Solicitar a massa do diamante para o cliente, e com isso realizar o cálculo:'''.replace("  ", ""), language))
+    st.latex(Translate("Quilate", language) + r" = \frac{" + Translate("Massa (mg)", language) + r"}{200}")
 
     st.markdown(Translate('''2) Solicitar ao usuário a quantidade de pontos do diamante e calcular o quilate usando a fórmula:''', language))
-    st.latex(r"Quilate = \frac{\text{Pontos do diamante (pt)}}{100}")
+    st.latex(Translate("Quilate", language) + r" = \frac{\text{" + Translate("Pontos do diamante (pt)", language) + r"}}{100}")
 
     st.markdown(Translate('''3) Para a segunda forma de estimar o quilate do diamante, é necessário 4 coisas: Comprimento (mm), Largura (mm), Profundidade (mm) e densidade (mm/mm³). Com isso utilizaremos o cálculo da densidade de um objeto, para assim cálcular primeiramante a massa do diamante:''', language))
-    st.latex(r"Densidade = \frac{Massa}{Volume} \rightarrow Massa = Densidade \times Volume")
+    st.latex(Translate("Densidade", language) + r" = \frac{" + Translate("Massa (mg)", language) + r"}{" + Translate("Volume", language) + r"} \rightarrow " + Translate("Massa (mg)", language) + " = " + Translate("Densidade", language) + r" \times " + Translate("Volume", language))
+    
     st.markdown(Translate("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entretanto temos um problema, não temos o volume do diamante, entretanto para isso, iremos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismenbrar o cálculo do volume de um objeto, sendo:", language))
-    st.latex(r"Volume = Comprimento \times Largura \times Profundidade")
+    st.latex(Translate("Volume", language) + r" = " + Translate("Comprimento", language) + r" \times " + Translate("Largura", language) + r" \times " + Translate("Profundidade", language))
+    
     st.markdown(Translate("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Substituindo na fórmula então, ficará:", language))
-    st.latex(r"Massa = Comprimento \times Largura \times Profundidade \times Densidade")
+    st.latex(Translate("Massa (mg)", language) + r" = " + Translate("Comprimento", language) + r" \times " + Translate("Largura", language) + r" \times " + Translate("Profundidade", language) + r" \times " + Translate("Densidade", language))
+    
     st.markdown(Translate("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Agora teremos de descobrir o quilate do diamante, para isso, usaremos a forma 1 de estimar o &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cálculo do diamante:", language))
-    st.latex(r"Quilate = \frac{Massa (mg)}{200}")
+    st.latex(Translate("Quilate", language) + r" = \frac{" + Translate("Massa (mg)", language) + r"}{200}")
+    
     st.markdown(Translate("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ficando na fórmula geral:", language))
-    st.latex(r"Quilate = \frac{Densidade \times Volume}{200}")
-    st.latex(r"\text{OU}")
-    st.latex(r"Quilate = \frac{Comprimento \times Largura \times Profundidade \times Densidade}{200}")
+    st.latex(Translate("Quilate", language) + r" = \frac{" + Translate("Densidade", language) + r" \times " + Translate("Volume", language) + r"}{200}")
+    st.latex(r"\text{" + Translate("OU", language) + r"}")
+    st.latex(Translate("Quilate", language) + r" = \frac{" + Translate("Comprimento", language) + r" \times " + Translate("Largura", language) + r" \times " + Translate("Profundidade", language) + r" \times " + Translate("Densidade", language) + r"}{200}")
     
     # Iniciando outro bloco de estudos
     st.markdown(Translate("## **Relação de preço com as colunas categóricas**", language))
@@ -550,6 +554,8 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
             
 
         return cut, color, clarity
+    
+    st.markdown("# **OBS: O código abaixo demora aproximadamente 1 min e 20 segundos!!**")
     
     st.code('cut, color, clarity = agrupamento(diamonds, "price", price)\ncut_carat, color_carat, clarity_carat = agrupamento(diamonds, "carat", carat)')
     cut, color, clarity = agrupamento(diamonds, "price", price)
