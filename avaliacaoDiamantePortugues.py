@@ -172,7 +172,7 @@ def cadernoJupyter(language):
     st.markdown(Translate('''- A é o diamante que queremos prever o valor.''', language))
     st.markdown(Translate("- B é o diamante que estamos calculando a distância.", language))
 
-    st.markdown(Translate("OBS: Este bloco de implementação do KNN pode demorar cerca de 1 minuto para carregar devido ao processamento intensivo de dados!!!".upper(), language))
+    st.markdown(Translate("# **OBS: Este bloco de implementação do KNN pode demorar cerca de 1 minuto para carregar devido ao processamento intensivo de dados!!!**".upper(), language))
 
     st.code('''
     encoder = OrdinalEncoder()
