@@ -72,11 +72,11 @@ def cadernoJupyter(language):
 
 **Cenário 1**: Estimar um preço para o diamante
 
-*COMO* um usuário,
+**COMO** um usuário,
 
-*EU* quero descobrir o valor de um diamante,
+**EU** quero descobrir o valor de um diamante,
 
-*PARA* não ser enganado quando for realizar a venda de meu diamante.
+**PARA** não ser enganado quando for realizar a venda de meu diamante.
 ''', language))
     
     st.write("---")
@@ -590,29 +590,29 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
     
     st.write("---")
     
-    st.markdown(Translate("# Etapa 5: Avaliação", language))
+    st.markdown("# **" + Translate("Etapa 5: Avaliação", language) + "**")
     
     st.markdown(Translate("Na penúltima etapa do CRISP-DM, é crucial avaliar o desempenho do modelo de previsão adotado. Nesse contexto, utilizaremos a biblioteca scikit-learn para empregar o coeficiente de determinação (R²). Esse coeficiente nos auxilia na avaliação da precisão do modelo tanto para substituir valores faltantes na base de dados quanto para estimar o valor de diamantes fornecidos pelos usuários.", language))
     
-    st.code(f'''# {Translate("Transformando as variáveis categóricas em numéricas", language)}
+    st.code("# " + f'''{Translate("Transformando as variáveis categóricas em numéricas", language)}''' +'''
     encoder = OrdinalEncoder()
     diamonds_encoder = encoder.fit_transform(diamonds.drop(columns=['price']))
-
-    # {Translate("Colocando essas alterações na base de dados", language)}
+     
+    # ''' + Translate("Colocando essas alterações na base de dados", language) + '''
     X = pd.DataFrame(diamonds_encoder.tolist(), columns = list(diamonds.columns).remove("price"))
     y = diamonds['price']
 
-    # {Translate("Dividir os dados em conjuntos de treinamento e teste", language)}
+    # ''' + Translate("Dividir os dados em conjuntos de treinamento e teste", language) + '''
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-    # {Translate("Criar e treinar o modelo KNN  # valor de K baseado no log do número de observações", language)}
+    # ''' + Translate("Criar e treinar o modelo KNN  # valor de K baseado no log do número de observações", language) + '''
     knn = KNeighborsRegressor(n_neighbors = int(round(math.log(diamonds.shape[0]), 0)))
     knn.fit(X_train, y_train)
 
-    # {Translate("Fazer previsões no conjunto de teste", language)}
+    # ''' + Translate("Fazer previsões no conjunto de teste", language) + '''
     y_pred = knn.predict(X_test)
 
-    # {Translate("Avaliar o modelo", language)}
+    # ''' + Translate("Avaliar o modelo", language) + '''
     r2 = r2_score(y_test, y_pred)
     print(f'R² ({Translate("Coeficiente de Determinação", language)}): {r2 * 100:.2f}%')''', language = "python")
     
@@ -642,6 +642,6 @@ Já para x(comprimento), y(largura) e z(profundidade), essa confiabilidade é de
 
     st.write("---")
     
-    st.markdown(Translate("# **Etapa 6:**", language))
+    st.markdown(Translate("# **Etapa 6: Implementação**", language))
     st.markdown(Translate("Por fim, a implementação é a última etapa do CRISP-DM. Nesta fase, colocamos em prática o projeto estudado. Agora que conhecemos o nível de confiabilidade do algoritmo e as variáveis mínimas que são importantes para a estimativa do preço do diamante, podemos implementar nosso estudo no projeto final. Isso significa que podemos utilizar todo o conhecimento e o modelo desenvolvido para prever o preço de um diamante de forma eficaz e precisa. Por isso o passo final é realizar o programa que prever o valor do diamante.", language))
     
