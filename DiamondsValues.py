@@ -178,10 +178,10 @@ if button1 or (button1 == False and button2 == False):
                                                 Digite abaixo o Profundidade (mm) do diamante:'''.replace("  ", ""), to_lang = language).split("\n")
             
         else:
-            solicitacao_digitacao = Translate('''##### **Please, set the carat!!**
+            solicitacao_digitacao = '''##### **Please, set the carat!!**
                                                 Enter the diamond lenght (mm) below:
                                                 Enter the diamond width (mm) below:
-                                                Enter the diamond depth (mm) below:'''.replace("  ", ""), to_lang = language).split("\n")
+                                                Enter the diamond depth (mm) below:'''.replace("  ", "").split("\n")
 
 
         if option == texto[0]:
